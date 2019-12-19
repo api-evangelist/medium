@@ -1,0 +1,61 @@
+{
+    "name": "Medium",
+    "description": "<p>Medium is an online publishing platform founded by Twitter co-founder Evan Williams in August 2012. The platform has evolved into a hybrid of non-professional contributions and professional, paid contributions, an example of social journalism.<\/p>",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/medium-logo.png",
+    "tags": [
+        "api provider",
+        "api service provider",
+        "blogging",
+        "communications",
+        "general data",
+        "have api",
+        "relative data"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/medium\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Medium.com",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/logos\/medium-logo.png",
+            "humanURL": "https:\/\/medium.com\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/medium-com-openapi.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/medium-com.json"
+                },
+                {
+                    "type": "x-postman-collecction",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/medium-com-postman-collection.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/Medium"
+        },
+        {
+            "type": "Transparency Report",
+            "url": "https:\/\/medium.com\/transparency-report"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/Medium"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/medium.com\/"
+        }
+    ]
+}
