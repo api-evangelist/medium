@@ -1,5 +1,5 @@
 {
-    "id": "45e323744fe974f114ddbbb4f9a4fb70",
+    "id": "65cce99194117ae90ef924660c2a9f70",
     "name": "Medium.com",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "c6ff57e707d79bdc7cc8d726c1d9d2b6",
+            "id": "3efb72f01f45b157e26fdae8f68027a4",
             "name": "User details",
             "url": "httpsapi.medium.com\/v1\/me",
             "description": "Returns details of the user who has granted permission to the application.",
@@ -29,11 +29,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "45e323744fe974f114ddbbb4f9a4fb70",
+            "collectionId": "65cce99194117ae90ef924660c2a9f70",
             "rawModeData": ""
         },
         {
-            "id": "47c096e569d459749333d70dbd235b73",
+            "id": "d480c9a636813f329089cfca0a40f96b",
             "name": "Contributors of Publication",
             "url": "httpsapi.medium.com\/v1\/publications\/{publicationId}\/contributors",
             "description": "This endpoint returns a list of contributors for a given publication. In other words, a list of Medium users who are allowed to publish under a publication, as well as a description of their exact role in the publication (for now, either an editor or a writer).",
@@ -60,11 +60,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "45e323744fe974f114ddbbb4f9a4fb70",
+            "collectionId": "65cce99194117ae90ef924660c2a9f70",
             "rawModeData": ""
         },
         {
-            "id": "5689efc61a43bf2bb5fa175a31803f86",
+            "id": "108549016e6b6387c638c0e7be325558",
             "name": "Create Publication Post",
             "url": "httpsapi.medium.com\/v1\/publications\/{publicationId}\/posts",
             "description": "creating a post and associating it with a publication on Medium. The request also shows this association, considering posts a collection of resources under a publication\n\nThere are additional rules around publishing that each request to this API must respect:\n  - If the authenticated user is an 'editor' for the publication, they can create posts with any publish status. Posts published as 'public' or 'unlisted' will appear in collection immediately, while posts created as 'draft' will remain in ",
@@ -98,11 +98,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "45e323744fe974f114ddbbb4f9a4fb70",
+            "collectionId": "65cce99194117ae90ef924660c2a9f70",
             "rawModeData": ""
         },
         {
-            "id": "8f9045f1841fa9e4ba87b4145ffc3615",
+            "id": "77f7a4ac8a2b169e7adbec4a78443fee",
             "name": "Create User Post",
             "url": "httpsapi.medium.com\/v1\/users\/{authorId}\/posts",
             "description": "Creates a post on the authenticated user???s profile.",
@@ -136,11 +136,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "45e323744fe974f114ddbbb4f9a4fb70",
+            "collectionId": "65cce99194117ae90ef924660c2a9f70",
             "rawModeData": ""
         },
         {
-            "id": "d974270e465e20395db6f72ccce06325",
+            "id": "c804ca2dbd2ba4b852f3a528aad14e9e",
             "name": "User's publications",
             "url": "httpsapi.medium.com\/v1\/users\/{userId}\/publications",
             "description": "Returns a full list of publications that the user is related to in some way. This includes all publications the user is subscribed to, writes to, or edits.",
@@ -167,7 +167,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "45e323744fe974f114ddbbb4f9a4fb70",
+            "collectionId": "65cce99194117ae90ef924660c2a9f70",
             "rawModeData": ""
         }
     ]
