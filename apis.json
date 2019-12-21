@@ -11,8 +11,8 @@
         "have api",
         "relative data"
     ],
-    "created": "2019-12-19",
-    "modified": "2019-12-19",
+    "created": "2019-12-21",
+    "modified": "2019-12-21",
     "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/medium\/master\/apis.json",
     "specificationVersion": "0.14",
     "apis": [
@@ -26,7 +26,7 @@
             "properties": [
                 {
                     "type": "x-openapi",
-                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/medium-com-openapi.json"
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/medium\/master\/medium-com-openapi.json"
                 },
                 {
                     "type": "x-openapi",
@@ -34,13 +34,17 @@
                 },
                 {
                     "type": "x-postman-collecction",
-                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/medium-com-postman-collection.json"
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/medium\/master\/medium-com-postman-collection.json"
                 }
             ]
         }
     ],
     "include": [],
     "x-common": [
+        {
+            "type": "APIs.json",
+            "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/apis.json"
+        },
         {
             "type": "Github",
             "url": "https:\/\/github.com\/Medium"
