@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medium.com/schemas/medium/post.json",
+  "title": "Medium Post",
+  "description": "A post published on the Medium platform, including its content metadata, publishing status, tags, licensing, and authorship details.",
+  "type": "object",
+  "required": ["title", "contentFormat", "content"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier assigned to the post by Medium."
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "The title of the post, limited to 100 characters."
+    },
+    "contentFormat": {
+      "type": "string",
+      "enum": ["html", "markdown"],
+      "description": "The format of the content field, either HTML or Markdown."
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The body content of the post in the format specified by contentFormat."
+    },
+    "authorId": {
+      "type": "string",
+      "description": "The unique identifier of the user who authored the post."
+    },
+    "tags": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "maxLength": 25
+      },
+      "description": "Tags to classify the post, limited to a maximum of three tags with each up to 25 characters."
+    },
+    "canonicalUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "The original URL if this post was first published elsewhere, used for SEO canonical linking."
+    },
+    "publishStatus": {
+      "type": "string",
+      "enum": ["public", "draft", "unlisted"],
+      "default": "public",
+      "description": "The publish status of the post. Public posts are visible to everyone, drafts are private, and unlisted posts are accessible only via direct link."
+    },
+    "publishedAt": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The timestamp in milliseconds when the post was published."
+    },
+    "license": {
+      "type": "string",
+      "enum": [
+        "all-rights-reserved",
+        "cc-40-by",
+        "cc-40-by-sa",
+        "cc-40-by-nd",
+        "cc-40-by-nc",
+        "cc-40-by-nc-nd",
+        "cc-40-by-nc-sa",
+        "cc-40-zero",
+        "public-domain"
+      ],
+      "default": "all-rights-reserved",
+      "description": "The license under which the post is published."
+    },
+    "licenseUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to the full text of the license under which the post is published."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to the post on Medium."
+    },
+    "publicationId": {
+      "type": "string",
+      "description": "The unique identifier of the publication the post belongs to, if published within a publication."
+    },
+    "notifyFollowers": {
+      "type": "boolean",
+      "description": "Whether to notify the author's followers about the new post."
+    }
+  }
+}

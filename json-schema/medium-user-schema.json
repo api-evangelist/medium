@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://medium.com/schemas/medium/user.json",
+  "title": "Medium User",
+  "description": "A Medium user profile containing identifying information, username, display name, profile URL, and avatar image.",
+  "type": "object",
+  "required": ["id", "username", "name"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier for the user on Medium."
+    },
+    "username": {
+      "type": "string",
+      "description": "The user's username on Medium, used in their profile URL path."
+    },
+    "name": {
+      "type": "string",
+      "description": "The user's display name as shown on their profile."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to the user's Medium profile page."
+    },
+    "imageUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL to the user's avatar image on Medium."
+    }
+  }
+}

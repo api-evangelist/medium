@@ -1,0 +1,100 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "medium": "https://api.medium.com/v1/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "User": {
+      "@id": "schema:Person",
+      "@context": {
+        "id": "medium:userId",
+        "username": "schema:alternateName",
+        "name": "schema:name",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "imageUrl": {
+          "@id": "schema:image",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Publication": {
+      "@id": "schema:Periodical",
+      "@context": {
+        "id": "medium:publicationId",
+        "name": "schema:name",
+        "description": "schema:description",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "imageUrl": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "contributors": {
+          "@id": "schema:contributor",
+          "@container": "@set"
+        }
+      }
+    },
+
+    "Post": {
+      "@id": "schema:BlogPosting",
+      "@context": {
+        "id": "medium:postId",
+        "title": "schema:headline",
+        "content": "schema:articleBody",
+        "authorId": "schema:author",
+        "tags": {
+          "@id": "schema:keywords",
+          "@container": "@set"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "canonicalUrl": {
+          "@id": "schema:mainEntityOfPage",
+          "@type": "@id"
+        },
+        "publishStatus": "schema:creativeWorkStatus",
+        "publishedAt": {
+          "@id": "dcterms:issued",
+          "@type": "xsd:dateTime"
+        },
+        "license": "dcterms:license",
+        "licenseUrl": {
+          "@id": "schema:license",
+          "@type": "@id"
+        },
+        "publicationId": "schema:isPartOf"
+      }
+    },
+
+    "Contributor": {
+      "@id": "schema:Role",
+      "@context": {
+        "userId": "schema:contributor",
+        "publicationId": "schema:isPartOf",
+        "role": "schema:roleName"
+      }
+    },
+
+    "Image": {
+      "@id": "schema:ImageObject",
+      "@context": {
+        "url": {
+          "@id": "schema:contentUrl",
+          "@type": "@id"
+        },
+        "md5": "medium:md5"
+      }
+    }
+  }
+}

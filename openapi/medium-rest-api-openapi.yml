@@ -1,0 +1,580 @@
+openapi: 3.1.0
+info:
+  title: Medium REST API
+  description: >-
+    The Medium REST API provides programmatic access to the Medium online
+    publishing platform. Developers can authenticate users via self-issued
+    access tokens or OAuth2, retrieve user profile details, list publications
+    a user is associated with, fetch publication contributors, create posts
+    on a user's profile or within a publication, and upload images. The API
+    is JSON-based with all requests made over HTTPS to endpoints under
+    api.medium.com/v1, enabling integrations that automate content
+    publishing workflows on Medium. All responses are wrapped in a data
+    envelope object.
+  version: '1.0'
+  contact:
+    name: Medium Support
+    url: https://help.medium.com
+  termsOfService: https://policy.medium.com/medium-terms-of-service-9db0094a1e0f
+externalDocs:
+  description: Medium API Documentation
+  url: https://github.com/Medium/medium-api-docs
+servers:
+  - url: https://api.medium.com/v1
+    description: Production Server
+tags:
+  - name: Users
+    description: >-
+      Operations for retrieving authenticated user profile information
+      including username, name, URL, and avatar image.
+  - name: Publications
+    description: >-
+      Operations for listing publications a user is associated with and
+      retrieving contributors for a given publication.
+  - name: Posts
+    description: >-
+      Operations for creating new posts on a user's profile or within a
+      publication, supporting HTML and Markdown content formats.
+  - name: Images
+    description: >-
+      Operations for uploading images to Medium for use in posts. Supports
+      JPEG, PNG, GIF, and TIFF formats.
+security:
+  - bearerAuth: []
+paths:
+  /me:
+    get:
+      operationId: getAuthenticatedUser
+      summary: Get authenticated user
+      description: >-
+        Returns details of the authenticated user including their unique
+        user ID, username, display name, profile URL, and avatar image URL.
+        This endpoint is typically used after authentication to obtain the
+        user ID required by other endpoints.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Successfully retrieved the authenticated user profile.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{userId}/publications:
+    get:
+      operationId: listUserPublications
+      summary: List user publications
+      description: >-
+        Returns a list of publications that the specified user subscribes
+        to, writes for, or edits. The authenticated user can only list
+        their own publications; attempting to list another user's
+        publications will result in a 403 Forbidden error.
+      tags:
+        - Publications
+      parameters:
+        - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Successfully retrieved the list of user publications.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Publication'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            The authenticated user does not have permission to list
+            publications for the specified user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /publications/{publicationId}/contributors:
+    get:
+      operationId: listPublicationContributors
+      summary: List publication contributors
+      description: >-
+        Returns a list of contributors (editors and writers) for the
+        specified publication. Each contributor includes their user ID,
+        the publication ID, and their role within the publication.
+      tags:
+        - Publications
+      parameters:
+        - $ref: '#/components/parameters/publicationId'
+      responses:
+        '200':
+          description: Successfully retrieved the list of publication contributors.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contributor'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{authorId}/posts:
+    post:
+      operationId: createUserPost
+      summary: Create a post on a user's profile
+      description: >-
+        Creates a new post and publishes it on the authenticated user's
+        profile. The post content can be provided in HTML or Markdown
+        format. By default posts are published publicly, but can also be
+        created as drafts or unlisted. A maximum of three tags can be
+        applied to each post.
+      tags:
+        - Posts
+      parameters:
+        - $ref: '#/components/parameters/authorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+      responses:
+        '201':
+          description: Successfully created the post.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Post'
+        '400':
+          description: >-
+            The request body is malformed or contains invalid values such
+            as too many tags or an unsupported content format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            The authenticated user is not authorized to publish posts for
+            the specified author.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /publications/{publicationId}/posts:
+    post:
+      operationId: createPublicationPost
+      summary: Create a post in a publication
+      description: >-
+        Creates a new post within the specified publication. Editors can
+        create posts with any publish status. Writers can only create
+        drafts which are then submitted for review. Users who are not
+        contributors to the publication cannot create posts. The post
+        content can be provided in HTML or Markdown format.
+      tags:
+        - Posts
+      parameters:
+        - $ref: '#/components/parameters/publicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+      responses:
+        '201':
+          description: Successfully created the post in the publication.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Post'
+        '400':
+          description: >-
+            The request body is malformed or contains invalid values such
+            as too many tags or an unsupported content format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: >-
+            The authenticated user is not a contributor to the specified
+            publication or does not have the required role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /images:
+    post:
+      operationId: uploadImage
+      summary: Upload an image
+      description: >-
+        Uploads an image to Medium for use in posts. The image must be
+        sent as multipart form data with the field name "image". Supported
+        formats are JPEG, PNG, GIF, and TIFF. Only one image can be
+        uploaded per request. Medium also automatically side-loads images
+        referenced in img src attributes within post content.
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: >-
+                    The image file to upload. Supported formats are
+                    image/jpeg, image/png, image/gif, and image/tiff.
+      responses:
+        '201':
+          description: Successfully uploaded the image.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Image'
+        '401':
+          description: >-
+            The access token is invalid, has been revoked, or was not
+            provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Self-issued access token generated from Medium account settings
+        or an OAuth2 access token obtained via the authorization flow.
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: >-
+        The unique identifier of the user whose publications are being
+        listed.
+      schema:
+        type: string
+    authorId:
+      name: authorId
+      in: path
+      required: true
+      description: >-
+        The unique identifier of the user on whose profile the post will
+        be created. Must match the authenticated user.
+      schema:
+        type: string
+    publicationId:
+      name: publicationId
+      in: path
+      required: true
+      description: >-
+        The unique identifier of the publication.
+      schema:
+        type: string
+  schemas:
+    User:
+      type: object
+      description: >-
+        A Medium user profile containing identifying information and
+        profile metadata.
+      properties:
+        id:
+          type: string
+          description: >-
+            The unique identifier for the user on Medium.
+        username:
+          type: string
+          description: >-
+            The user's username on Medium, used in their profile URL.
+        name:
+          type: string
+          description: >-
+            The user's display name as shown on their profile.
+        url:
+          type: string
+          format: uri
+          description: >-
+            The URL to the user's Medium profile page.
+        imageUrl:
+          type: string
+          format: uri
+          description: >-
+            The URL to the user's avatar image on Medium.
+    Publication:
+      type: object
+      description: >-
+        A Medium publication that aggregates posts from multiple
+        contributors around a shared topic or brand.
+      properties:
+        id:
+          type: string
+          description: >-
+            The unique identifier for the publication.
+        name:
+          type: string
+          description: >-
+            The name of the publication as displayed on Medium.
+        description:
+          type: string
+          description: >-
+            A short description of the publication's focus or mission.
+        url:
+          type: string
+          format: uri
+          description: >-
+            The URL to the publication's homepage on Medium.
+        imageUrl:
+          type: string
+          format: uri
+          description: >-
+            The URL to the publication's logo or header image.
+    Contributor:
+      type: object
+      description: >-
+        A contributor to a Medium publication with a specific editorial
+        role.
+      properties:
+        publicationId:
+          type: string
+          description: >-
+            The unique identifier of the publication the contributor
+            belongs to.
+        userId:
+          type: string
+          description: >-
+            The unique identifier of the contributing user.
+        role:
+          type: string
+          enum:
+            - editor
+            - writer
+          description: >-
+            The role of the contributor within the publication. Editors
+            can manage all content while writers can submit drafts.
+    CreatePostRequest:
+      type: object
+      description: >-
+        The request body for creating a new post on Medium.
+      required:
+        - title
+        - contentFormat
+        - content
+      properties:
+        title:
+          type: string
+          maxLength: 100
+          description: >-
+            The title of the post, limited to 100 characters.
+        contentFormat:
+          type: string
+          enum:
+            - html
+            - markdown
+          description: >-
+            The format of the content field, either HTML or Markdown.
+        content:
+          type: string
+          description: >-
+            The body content of the post in the format specified by
+            contentFormat. HTML content should use semantic tags.
+        tags:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+            maxLength: 25
+          description: >-
+            Tags to classify the post, limited to a maximum of three
+            tags with each tag up to 25 characters.
+        canonicalUrl:
+          type: string
+          format: uri
+          description: >-
+            The original URL if this post was first published elsewhere.
+            Used to set the canonical link for SEO purposes.
+        publishStatus:
+          type: string
+          enum:
+            - public
+            - draft
+            - unlisted
+          default: public
+          description: >-
+            The publish status of the post. Defaults to public if not
+            specified. Writers creating publication posts can only use
+            draft.
+        license:
+          type: string
+          enum:
+            - all-rights-reserved
+            - cc-40-by
+            - cc-40-by-sa
+            - cc-40-by-nd
+            - cc-40-by-nc
+            - cc-40-by-nc-nd
+            - cc-40-by-nc-sa
+            - cc-40-zero
+            - public-domain
+          default: all-rights-reserved
+          description: >-
+            The license under which the post is published. Defaults to
+            all-rights-reserved.
+        notifyFollowers:
+          type: boolean
+          description: >-
+            Whether to notify the author's followers about the new post.
+    Post:
+      type: object
+      description: >-
+        A published or draft post on Medium containing the post metadata
+        and publishing details.
+      properties:
+        id:
+          type: string
+          description: >-
+            The unique identifier for the post.
+        title:
+          type: string
+          description: >-
+            The title of the post.
+        authorId:
+          type: string
+          description: >-
+            The unique identifier of the user who authored the post.
+        tags:
+          type: array
+          items:
+            type: string
+          description: >-
+            The tags applied to the post for classification.
+        url:
+          type: string
+          format: uri
+          description: >-
+            The URL to the post on Medium.
+        canonicalUrl:
+          type: string
+          format: uri
+          description: >-
+            The canonical URL of the post if it was originally published
+            elsewhere.
+        publishStatus:
+          type: string
+          enum:
+            - public
+            - draft
+            - unlisted
+          description: >-
+            The current publish status of the post.
+        publishedAt:
+          type: integer
+          format: int64
+          description: >-
+            The timestamp in milliseconds when the post was published.
+        license:
+          type: string
+          description: >-
+            The license identifier under which the post is published.
+        licenseUrl:
+          type: string
+          format: uri
+          description: >-
+            The URL to the full text of the license.
+        publicationId:
+          type: string
+          description: >-
+            The unique identifier of the publication the post belongs to,
+            if applicable.
+    Image:
+      type: object
+      description: >-
+        An uploaded image on Medium with its URL and content hash.
+      properties:
+        url:
+          type: string
+          format: uri
+          description: >-
+            The URL where the uploaded image is hosted on Medium.
+        md5:
+          type: string
+          description: >-
+            The MD5 hash of the uploaded image content for verification.
+    Error:
+      type: object
+      description: >-
+        An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: >-
+                  A human-readable description of the error.
+              code:
+                type: integer
+                description: >-
+                  The numeric error code identifying the error type.
