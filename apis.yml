@@ -1,19 +1,17 @@
 aid: medium
-url: 
-  https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
 apis:
   - aid: medium:rest-api
     name: Medium REST API
     tags:
-      - Publishing
       - Blogging
       - Content
-      - Writing
       - Posts
       - Publications
+      - Publishing
       - Social Media
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - Writing
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.medium.com/v1
     humanURL: https://github.com/Medium/medium-api-docs
     properties:
@@ -33,11 +31,10 @@ apis:
     name: Medium OAuth2 API
     tags:
       - Authentication
-      - OAuth
       - Authorization
       - Identity
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+      - OAuth
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://medium.com/m/oauth
     humanURL: https://github.com/Medium/medium-api-docs#2-authentication
     properties:

@@ -23,22 +23,22 @@ servers:
   - url: https://api.medium.com/v1
     description: Production Server
 tags:
-  - name: Users
-    description: >-
-      Operations for retrieving authenticated user profile information
-      including username, name, URL, and avatar image.
-  - name: Publications
-    description: >-
-      Operations for listing publications a user is associated with and
-      retrieving contributors for a given publication.
-  - name: Posts
-    description: >-
-      Operations for creating new posts on a user's profile or within a
-      publication, supporting HTML and Markdown content formats.
   - name: Images
     description: >-
       Operations for uploading images to Medium for use in posts. Supports
       JPEG, PNG, GIF, and TIFF formats.
+  - name: Posts
+    description: >-
+      Operations for creating new posts on a user's profile or within a
+      publication, supporting HTML and Markdown content formats.
+  - name: Publications
+    description: >-
+      Operations for listing publications a user is associated with and
+      retrieving contributors for a given publication.
+  - name: Users
+    description: >-
+      Operations for retrieving authenticated user profile information
+      including username, name, URL, and avatar image.
 security:
   - bearerAuth: []
 paths:
