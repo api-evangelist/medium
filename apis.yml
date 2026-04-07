@@ -1,5 +1,6 @@
 aid: medium
-url: https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
 apis:
   - aid: medium:rest-api
     name: Medium REST API
@@ -11,7 +12,8 @@ apis:
       - Posts
       - Publications
       - Social Media
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.medium.com/v1
     humanURL: https://github.com/Medium/medium-api-docs
     properties:
@@ -34,7 +36,8 @@ apis:
       - OAuth
       - Authorization
       - Identity
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://medium.com/m/oauth
     humanURL: https://github.com/Medium/medium-api-docs#2-authentication
     properties:
@@ -61,3 +64,6 @@ common:
   - type: JSONSchema
     url: json-schema/medium-publication-schema.json
 modified: '2026-03-20'
+description: >-
+  Documentation for Medium's OAuth2 API. Contribute to Medium/medium-api-docs development
+  by creating an account on GitHub.
