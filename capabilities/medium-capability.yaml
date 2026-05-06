@@ -1,0 +1,184 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Medium OAuth2 API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their
+    behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization
+    code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including
+    basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access
+    their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  tags:
+  - Medium
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: medium
+    baseUri: https://medium.com/m/oauth
+    description: Medium OAuth2 API HTTP API.
+    resources:
+    - name: authorize
+      path: /authorize
+      operations:
+      - name: authorizeuser
+        method: GET
+        description: Authorize a user via OAuth2
+        inputParameters:
+        - name: client_id
+          in: query
+          type: string
+          required: true
+          description: The client ID of the application as registered with Medium.
+        - name: scope
+          in: query
+          type: string
+          required: true
+          description: 'A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications,
+            publishPost, and uploadImage. The uploadImage scope is an '
+        - name: state
+          in: query
+          type: string
+          required: true
+          description: An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged
+            in the callback.
+        - name: response_type
+          in: query
+          type: string
+          required: true
+          description: Must be set to "code" to indicate the authorization code grant flow.
+        - name: redirect_uri
+          in: query
+          type: string
+          required: true
+          description: The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs
+            registered for the application.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tokens
+      path: /tokens
+      operations:
+      - name: exchangeauthorizationcode
+        method: POST
+        description: Exchange authorization code for tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tokens-refresh
+      path: /tokens/refresh
+      operations:
+      - name: refreshaccesstoken
+        method: POST
+        description: Refresh an access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: medium-rest
+    description: REST adapter for Medium OAuth2 API.
+    resources:
+    - path: /authorize
+      name: authorizeuser
+      operations:
+      - method: GET
+        name: authorizeuser
+        description: Authorize a user via OAuth2
+        call: medium.authorizeuser
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tokens
+      name: exchangeauthorizationcode
+      operations:
+      - method: POST
+        name: exchangeauthorizationcode
+        description: Exchange authorization code for tokens
+        call: medium.exchangeauthorizationcode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /tokens/refresh
+      name: refreshaccesstoken
+      operations:
+      - method: POST
+        name: refreshaccesstoken
+        description: Refresh an access token
+        call: medium.refreshaccesstoken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: medium-mcp
+    transport: http
+    description: MCP adapter for Medium OAuth2 API for AI agent use.
+    tools:
+    - name: authorizeuser
+      description: Authorize a user via OAuth2
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: medium.authorizeuser
+      with:
+        client_id: tools.client_id
+        scope: tools.scope
+        state: tools.state
+        response_type: tools.response_type
+        redirect_uri: tools.redirect_uri
+      inputParameters:
+      - name: client_id
+        type: string
+        description: The client ID of the application as registered with Medium.
+        required: true
+      - name: scope
+        type: string
+        description: 'A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications,
+          publishPost, and uploadImage. The uploadImage scope is an '
+        required: true
+      - name: state
+        type: string
+        description: An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged
+          in the callback.
+        required: true
+      - name: response_type
+        type: string
+        description: Must be set to "code" to indicate the authorization code grant flow.
+        required: true
+      - name: redirect_uri
+        type: string
+        description: The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs
+          registered for the application.
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: exchangeauthorizationcode
+      description: Exchange authorization code for tokens
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: medium.exchangeauthorizationcode
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: refreshaccesstoken
+      description: Refresh an access token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: medium.refreshaccesstoken
+      outputParameters:
+      - type: object
+        mapping: $.
