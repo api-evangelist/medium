@@ -52,7 +52,7 @@ apis:
       developers to request only the level of access their application
       requires.
 common:
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/medium-context.jsonld
   - type: JSONSchema
     url: json-schema/medium-post-schema.json
