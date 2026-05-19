@@ -1,0 +1,108 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Medium OAuth2 API — Authorization
+  description: 'Medium OAuth2 API — Authorization. 1 operations. Lead operation: Authorize a user via OAuth2. Self-contained
+    Naftiko capability covering one Medium business surface.'
+  tags:
+  - Medium
+  - Authorization
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MEDIUM_API_KEY: MEDIUM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: oauth2-authorization
+    baseUri: https://medium.com/m/oauth
+    description: Medium OAuth2 API — Authorization business capability. Self-contained, no shared references.
+    resources:
+    - name: authorize
+      path: /authorize
+      operations:
+      - name: authorizeuser
+        method: GET
+        description: Authorize a user via OAuth2
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: client_id
+          in: query
+          type: string
+          description: The client ID of the application as registered with Medium.
+          required: true
+        - name: scope
+          in: query
+          type: string
+          description: 'A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications,
+            publishPost, and uploadImage. The uploadImage scope is an '
+          required: true
+        - name: state
+          in: query
+          type: string
+          description: An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged
+            in the callback.
+          required: true
+        - name: response_type
+          in: query
+          type: string
+          description: Must be set to "code" to indicate the authorization code grant flow.
+          required: true
+        - name: redirect_uri
+          in: query
+          type: string
+          description: The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs
+            registered for the application.
+          required: true
+  exposes:
+  - type: rest
+    namespace: oauth2-authorization-rest
+    port: 8080
+    description: REST adapter for Medium OAuth2 API — Authorization. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/authorize
+      name: authorize
+      description: REST surface for authorize.
+      operations:
+      - method: GET
+        name: authorizeuser
+        description: Authorize a user via OAuth2
+        call: oauth2-authorization.authorizeuser
+        with:
+          client_id: rest.client_id
+          scope: rest.scope
+          state: rest.state
+          response_type: rest.response_type
+          redirect_uri: rest.redirect_uri
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: oauth2-authorization-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Medium OAuth2 API — Authorization. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: authorize-user-oauth2
+      description: Authorize a user via OAuth2
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: oauth2-authorization.authorizeuser
+      with:
+        client_id: tools.client_id
+        scope: tools.scope
+        state: tools.state
+        response_type: tools.response_type
+        redirect_uri: tools.redirect_uri
+      outputParameters:
+      - type: object
+        mapping: $.

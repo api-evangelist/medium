@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Medium REST API — Posts
+  description: 'Medium REST API — Posts. 2 operations. Lead operation: Create a post in a publication. Self-contained Naftiko
+    capability covering one Medium business surface.'
+  tags:
+  - Medium
+  - Posts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MEDIUM_API_KEY: MEDIUM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-posts
+    baseUri: https://api.medium.com/v1
+    description: Medium REST API — Posts business capability. Self-contained, no shared references.
+    resources:
+    - name: publications-publicationId-posts
+      path: /publications/{publicationId}/posts
+      operations:
+      - name: createpublicationpost
+        method: POST
+        description: Create a post in a publication
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: users-authorId-posts
+      path: /users/{authorId}/posts
+      operations:
+      - name: createuserpost
+        method: POST
+        description: Create a post on a user's profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.MEDIUM_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-posts-rest
+    port: 8080
+    description: REST adapter for Medium REST API — Posts. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/publications/{publicationid}/posts
+      name: publications-publicationid-posts
+      description: REST surface for publications-publicationId-posts.
+      operations:
+      - method: POST
+        name: createpublicationpost
+        description: Create a post in a publication
+        call: rest-posts.createpublicationpost
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/{authorid}/posts
+      name: users-authorid-posts
+      description: REST surface for users-authorId-posts.
+      operations:
+      - method: POST
+        name: createuserpost
+        description: Create a post on a user's profile
+        call: rest-posts.createuserpost
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-posts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Medium REST API — Posts. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-post-publication
+      description: Create a post in a publication
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-posts.createpublicationpost
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-post-user-s-profile
+      description: Create a post on a user's profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: rest-posts.createuserpost
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

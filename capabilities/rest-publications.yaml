@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Medium REST API — Publications
+  description: 'Medium REST API — Publications. 2 operations. Lead operation: List publication contributors. Self-contained
+    Naftiko capability covering one Medium business surface.'
+  tags:
+  - Medium
+  - Publications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    MEDIUM_API_KEY: MEDIUM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: rest-publications
+    baseUri: https://api.medium.com/v1
+    description: Medium REST API — Publications business capability. Self-contained, no shared references.
+    resources:
+    - name: publications-publicationId-contributors
+      path: /publications/{publicationId}/contributors
+      operations:
+      - name: listpublicationcontributors
+        method: GET
+        description: List publication contributors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users-userId-publications
+      path: /users/{userId}/publications
+      operations:
+      - name: listuserpublications
+        method: GET
+        description: List user publications
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.MEDIUM_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: rest-publications-rest
+    port: 8080
+    description: REST adapter for Medium REST API — Publications. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/publications/{publicationid}/contributors
+      name: publications-publicationid-contributors
+      description: REST surface for publications-publicationId-contributors.
+      operations:
+      - method: GET
+        name: listpublicationcontributors
+        description: List publication contributors
+        call: rest-publications.listpublicationcontributors
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/{userid}/publications
+      name: users-userid-publications
+      description: REST surface for users-userId-publications.
+      operations:
+      - method: GET
+        name: listuserpublications
+        description: List user publications
+        call: rest-publications.listuserpublications
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: rest-publications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Medium REST API — Publications. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-publication-contributors
+      description: List publication contributors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-publications.listpublicationcontributors
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-user-publications
+      description: List user publications
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: rest-publications.listuserpublications
+      outputParameters:
+      - type: object
+        mapping: $.
