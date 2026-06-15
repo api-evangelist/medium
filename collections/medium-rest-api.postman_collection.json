@@ -1,0 +1,1315 @@
+{
+  "item": [
+    {
+      "id": "c95f4813-1895-4ef1-af56-c2f431d235b3",
+      "name": "Images",
+      "description": {
+        "content": "Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8388e0ff-811a-4ed4-a871-9d8883a7bbef",
+          "name": "Upload an image",
+          "request": {
+            "name": "Upload an image",
+            "description": {
+              "content": "Uploads an image to Medium for use in posts. The image must be sent as multipart form data with the field name \"image\". Supported formats are JPEG, PNG, GIF, and TIFF. Only one image can be uploaded per request. Medium also automatically side-loads images referenced in img src attributes within post content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "547e97a8-d9e0-4359-b5f9-c4d3b904e99d",
+              "name": "Successfully uploaded the image.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff.",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"url\": \"http://aXipTaIYtsqBKeABQmGzWiTgTwMUjTfr.gnvzDAu.E35lJaayzzmmHJtFF9W,wlQzCWKoCByDOpJFG4\",\n    \"md5\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3cd8d1c9-a398-4fac-9ef4-70e2576ea369",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff.",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "e5474d57-76e6-498d-9b0a-0abf366dcdc2",
+      "name": "Posts",
+      "description": {
+        "content": "Operations for creating new posts on a user's profile or within a publication, supporting HTML and Markdown content formats.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1b2e2e78-6579-4e6d-aaa5-53ad05cf8c23",
+          "name": "Create a post on a user's profile",
+          "request": {
+            "name": "Create a post on a user's profile",
+            "description": {
+              "content": "Creates a new post and publishes it on the authenticated user's profile. The post content can be provided in HTML or Markdown format. By default posts are published publicly, but can also be created as drafts or unlisted. A maximum of three tags can be applied to each post.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":authorId",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "authorId",
+                  "description": "(Required) The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c60deec-1344-4421-b403-df199a71a16d",
+              "name": "Successfully created the post.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":authorId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorId",
+                      "description": "(Required) The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"authorId\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"url\": \"https://DiCikIOqEeohwR.kltSP-sr.TybtInzfS2HXNfRNUrXZLgefP0DmXUWhFBuhfojaJ\",\n    \"canonicalUrl\": \"https://hOVhefKuw.vuwmSpu462zKi8xc.l93JAQ00fFRyZZ+X7G\",\n    \"publishStatus\": \"draft\",\n    \"publishedAt\": 5576,\n    \"license\": \"string\",\n    \"licenseUrl\": \"https://PafJyHTmF.ayyyvmKz1grWa1zKNSbpd3b9DfWbzk7C1Zay0V0KzjAVE2PIIW\",\n    \"publicationId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7711baa-4537-4469-94c7-d20d00c17658",
+              "name": "The request body is malformed or contains invalid values such as too many tags or an unsupported content format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":authorId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorId",
+                      "description": "(Required) The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65561ec1-cdc3-4843-b830-1aabf21b6a8f",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":authorId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorId",
+                      "description": "(Required) The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b35f04a6-5151-4c07-b4de-fb5b9cd2be22",
+              "name": "The authenticated user is not authorized to publish posts for the specified author.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":authorId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorId",
+                      "description": "(Required) The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb26c2b9-0f2e-4378-a53b-043888fd35dd",
+          "name": "Create a post in a publication",
+          "request": {
+            "name": "Create a post in a publication",
+            "description": {
+              "content": "Creates a new post within the specified publication. Editors can create posts with any publish status. Writers can only create drafts which are then submitted for review. Users who are not contributors to the publication cannot create posts. The post content can be provided in HTML or Markdown format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publications",
+                ":publicationId",
+                "posts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "publicationId",
+                  "description": "(Required) The unique identifier of the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fd7c5b7-59d0-4a70-a40c-686d10d4d5ce",
+              "name": "Successfully created the post in the publication.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"authorId\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"url\": \"https://DiCikIOqEeohwR.kltSP-sr.TybtInzfS2HXNfRNUrXZLgefP0DmXUWhFBuhfojaJ\",\n    \"canonicalUrl\": \"https://hOVhefKuw.vuwmSpu462zKi8xc.l93JAQ00fFRyZZ+X7G\",\n    \"publishStatus\": \"draft\",\n    \"publishedAt\": 5576,\n    \"license\": \"string\",\n    \"licenseUrl\": \"https://PafJyHTmF.ayyyvmKz1grWa1zKNSbpd3b9DfWbzk7C1Zay0V0KzjAVE2PIIW\",\n    \"publicationId\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36156024-f37f-4532-a57c-3224c8d4f4e9",
+              "name": "The request body is malformed or contains invalid values such as too many tags or an unsupported content format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66c9760a-8a36-44d2-b33d-7bfbeeb03aeb",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "584d2f3f-ccc4-4d4e-9d0b-733001275df0",
+              "name": "The authenticated user is not a contributor to the specified publication or does not have the required role.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "posts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"contentFormat\": \"<string>\",\n  \"content\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"canonicalUrl\": \"<uri>\",\n  \"publishStatus\": \"public\",\n  \"license\": \"all-rights-reserved\",\n  \"notifyFollowers\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "252ec51c-3fd7-48c6-8c2e-3ee5235f9cf5",
+      "name": "Publications",
+      "description": {
+        "content": "Operations for listing publications a user is associated with and retrieving contributors for a given publication.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85bf1edc-6787-4a22-98ab-ed5f80d5ad7e",
+          "name": "List user publications",
+          "request": {
+            "name": "List user publications",
+            "description": {
+              "content": "Returns a list of publications that the specified user subscribes to, writes for, or edits. The authenticated user can only list their own publications; attempting to list another user's publications will result in a 403 Forbidden error.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":userId",
+                "publications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) The unique identifier of the user whose publications are being listed."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "82eb4e73-a488-4369-bf32-3fd349aa1645",
+              "name": "Successfully retrieved the list of user publications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://pYmtWCLHupThkmackoJdwLSd.kwlmEzcL,6Kv5KfAlF3S37iQa2bioW+djuqqXq0KytxsZoJntQHIB,5NI+VhC6yvet-ZNQS\",\n      \"imageUrl\": \"https://jvCCSyWCBisFnInTIUvvcqnogJAgR.aso2p.ZlUIigwr18IFcTWnsE8NwSLgmi\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"https://tBqvx.cgU,RRg1BVBg4TFrjqdgZWy2ssKbj51JjZFvwvEkeB02VrfSIpY1T+cK0IEe82qUmm\",\n      \"imageUrl\": \"https://SCgWAxgHjSwerfXOtTxAMvZFHgNCckIeO.lhdC7zvAjQdjjcZGfbVGZmCt1MRhCPKsFFX\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "443db3ed-26d2-4230-a400-61fd43bd8610",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dfeec06-4548-4502-89c9-6dc05c9ba26e",
+              "name": "The authenticated user does not have permission to list publications for the specified user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22f75d00-48b7-4709-a50d-aabb47ea689e",
+          "name": "List publication contributors",
+          "request": {
+            "name": "List publication contributors",
+            "description": {
+              "content": "Returns a list of contributors (editors and writers) for the specified publication. Each contributor includes their user ID, the publication ID, and their role within the publication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publications",
+                ":publicationId",
+                "contributors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "publicationId",
+                  "description": "(Required) The unique identifier of the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "774c71b2-9d72-4447-b7be-e5c184a34c2c",
+              "name": "Successfully retrieved the list of publication contributors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "contributors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"publicationId\": \"string\",\n      \"userId\": \"string\",\n      \"role\": \"editor\"\n    },\n    {\n      \"publicationId\": \"string\",\n      \"userId\": \"string\",\n      \"role\": \"writer\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34734704-e35a-492f-b6a6-0dcc711fb626",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "contributors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "7e599f03-5be8-4faf-a56b-a759a869401a",
+      "name": "Users",
+      "description": {
+        "content": "Operations for retrieving authenticated user profile information including username, name, URL, and avatar image.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "47fe95f7-7500-4ca7-885b-e7a31bf50284",
+          "name": "Get authenticated user",
+          "request": {
+            "name": "Get authenticated user",
+            "description": {
+              "content": "Returns details of the authenticated user including their unique user ID, username, display name, profile URL, and avatar image URL. This endpoint is typically used after authentication to obtain the user ID required by other endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d582f7c5-d9d8-42ff-90f5-253b33ff8776",
+              "name": "Successfully retrieved the authenticated user profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"username\": \"string\",\n    \"name\": \"string\",\n    \"url\": \"https://tKt.udFU6zY6WRTEWUOmPrmNmO-O1a7X+EBwJNCMM5zR73gVf1GXde\",\n    \"imageUrl\": \"http://bTfRwSTCuPEXBfKsUwWGbtoygwiIWNOIu.ovfkiGx\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a32fc01-cf65-4aa0-8458-48b259da58ba",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1469\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 2750\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.medium.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d5ed2131-e37f-4b23-ae03-950d8acd195b",
+    "name": "Medium REST API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium REST API provides programmatic access to the Medium online publishing platform. Developers can authenticate users via self-issued access tokens or OAuth2, retrieve user profile details, list publications a user is associated with, fetch publication contributors, create posts on a user's profile or within a publication, and upload images. The API is JSON-based with all requests made over HTTPS to endpoints under api.medium.com/v1, enabling integrations that automate content publishing workflows on Medium. All responses are wrapped in a data envelope object.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}

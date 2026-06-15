@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium OAuth2 API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorize a user via OAuth2",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://medium.com/m/oauth/authorize",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "The client ID of the application as registered with Medium."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications, publishPost, and uploadImage. The uploadImage scope is an extended scope that requires prior authorization from Medium."
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged in the callback."
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "Must be set to \"code\" to indicate the authorization code grant flow."
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs registered for the application."
+              }
+            ]
+          },
+          "docs": "Redirects the user to Medium's authorization page where they can grant the application access to their account. The application specifies the desired scopes and a state parameter for CSRF protection. Upon successful authorization, Medium redirects the user back to the specified redirect URI with an authorization code and the state parameter."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange authorization code for tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/tokens",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges an authorization code obtained from the authorization callback for an access token and a refresh token. The access token is valid for 60 days and is used to authenticate API requests on behalf of the user. The refresh token can be used to obtain a new access token when the current one expires."
+        },
+        {
+          "info": {
+            "name": "Refresh an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/tokens/refresh",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges a refresh token for a new access token. This endpoint is used when the current access token has expired. The new access token is valid for another 60 days. A new refresh token may also be returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

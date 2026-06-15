@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium REST API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.medium.com/v1/me"
+          },
+          "docs": "Returns details of the authenticated user including their unique user ID, username, display name, profile URL, and avatar image URL. This endpoint is typically used after authentication to obtain the user ID required by other endpoints."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Publications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user publications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.medium.com/v1/users/:userId/publications",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user whose publications are being listed."
+              }
+            ]
+          },
+          "docs": "Returns a list of publications that the specified user subscribes to, writes for, or edits. The authenticated user can only list their own publications; attempting to list another user's publications will result in a 403 Forbidden error."
+        },
+        {
+          "info": {
+            "name": "List publication contributors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.medium.com/v1/publications/:publicationId/contributors",
+            "params": [
+              {
+                "name": "publicationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the publication."
+              }
+            ]
+          },
+          "docs": "Returns a list of contributors (editors and writers) for the specified publication. Each contributor includes their user ID, the publication ID, and their role within the publication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a post on a user's profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.medium.com/v1/users/:authorId/posts",
+            "params": [
+              {
+                "name": "authorId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new post and publishes it on the authenticated user's profile. The post content can be provided in HTML or Markdown format. By default posts are published publicly, but can also be created as drafts or unlisted. A maximum of three tags can be applied to each post."
+        },
+        {
+          "info": {
+            "name": "Create a post in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.medium.com/v1/publications/:publicationId/posts",
+            "params": [
+              {
+                "name": "publicationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the publication."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new post within the specified publication. Editors can create posts with any publish status. Writers can only create drafts which are then submitted for review. Users who are not contributors to the publication cannot create posts. The post content can be provided in HTML or Markdown format."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.medium.com/v1/images",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "image",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads an image to Medium for use in posts. The image must be sent as multipart form data with the field name \"image\". Supported formats are JPEG, PNG, GIF, and TIFF. Only one image can be uploaded per request. Medium also automatically side-loads images referenced in img src attributes within post content."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

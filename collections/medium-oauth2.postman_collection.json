@@ -1,0 +1,640 @@
+{
+  "item": [
+    {
+      "id": "76f611f7-8f79-4125-9926-9b5447bc71eb",
+      "name": "Authorization",
+      "description": {
+        "content": "Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization page.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "53abf71d-f265-48f8-a904-b26f6cd76215",
+          "name": "Authorize a user via OAuth2",
+          "request": {
+            "name": "Authorize a user via OAuth2",
+            "description": {
+              "content": "Redirects the user to Medium's authorization page where they can grant the application access to their account. The application specifies the desired scopes and a state parameter for CSRF protection. Upon successful authorization, Medium redirects the user back to the specified redirect URI with an authorization code and the state parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The client ID of the application as registered with Medium."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "(Required) A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications, publishPost, and uploadImage. The uploadImage scope is an extended scope that requires prior authorization from Medium."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "(Required) An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged in the callback."
+                },
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be set to \"code\" to indicate the authorization code grant flow."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs registered for the application."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "36caa54b-ddaf-4bf5-ad15-ba99f73639ca",
+              "name": "Redirects the user to Medium's authorization page. After the user grants or denies access, they are redirected to the specified redirect URI with the authorization code and state as query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "926f614e-ce7c-4d84-acf3-ed06e7e1bb43",
+      "name": "Tokens",
+      "description": {
+        "content": "Endpoints for exchanging authorization codes for access tokens and refreshing expired access tokens.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1b53648a-54c7-45e2-a1d2-c58f4f46c669",
+          "name": "Exchange authorization code for tokens",
+          "request": {
+            "name": "Exchange authorization code for tokens",
+            "description": {
+              "content": "Exchanges an authorization code obtained from the authorization callback for an access token and a refresh token. The access token is valid for 60 days and is used to authenticate API requests on behalf of the user. The refresh token can be used to obtain a new access token when the current one expires.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "tokens"
+              ],
+              "host": [
+                "api",
+                "medium",
+                "com"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "(Required) The authorization code received from the authorization callback redirect."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The client ID of the application."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) The client secret of the application."
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be set to \"authorization_code\" for the initial token exchange."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) The same redirect URI used during the authorization request."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4e14829d-5109-4a27-8f7d-3dde1f4ea753",
+              "name": "Successfully exchanged the authorization code for tokens.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "api",
+                    "medium",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization code received from the authorization callback redirect.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be set to \"authorization_code\" for the initial token exchange.",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The same redirect URI used during the authorization request.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token_type\": \"Bearer\",\n  \"access_token\": \"string\",\n  \"refresh_token\": \"string\",\n  \"scope\": [\n    \"uploadImage\",\n    \"basicProfile\"\n  ],\n  \"expires_at\": 2005\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "736e48af-1508-44ee-b662-afeaa4b3b0fd",
+              "name": "The authorization code is invalid, expired, or the client credentials are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "tokens"
+                  ],
+                  "host": [
+                    "api",
+                    "medium",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The authorization code received from the authorization callback redirect.",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be set to \"authorization_code\" for the initial token exchange.",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The same redirect URI used during the authorization request.",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 8031\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 4127\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a351ccd7-e1af-48e5-87ab-bcdb99205912",
+          "name": "Refresh an access token",
+          "request": {
+            "name": "Refresh an access token",
+            "description": {
+              "content": "Exchanges a refresh token for a new access token. This endpoint is used when the current access token has expired. The new access token is valid for another 60 days. A new refresh token may also be returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "tokens",
+                "refresh"
+              ],
+              "host": [
+                "api",
+                "medium",
+                "com"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "(Required) The refresh token obtained from a previous token exchange."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The client ID of the application."
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) The client secret of the application."
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be set to \"refresh_token\" for token refresh requests."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c7db96d1-2533-4774-b8b0-4f2b10a41a58",
+              "name": "Successfully refreshed the access token.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "tokens",
+                    "refresh"
+                  ],
+                  "host": [
+                    "api",
+                    "medium",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token obtained from a previous token exchange.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be set to \"refresh_token\" for token refresh requests.",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token_type\": \"Bearer\",\n  \"access_token\": \"string\",\n  \"refresh_token\": \"string\",\n  \"scope\": [\n    \"uploadImage\",\n    \"basicProfile\"\n  ],\n  \"expires_at\": 2005\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8074a46-bcd8-46c9-ae87-e31cedf39e5a",
+              "name": "The refresh token is invalid, expired, or the client credentials are incorrect.",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "tokens",
+                    "refresh"
+                  ],
+                  "host": [
+                    "api",
+                    "medium",
+                    "com"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The refresh token obtained from a previous token exchange.",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client ID of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The client secret of the application.",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be set to \"refresh_token\" for token refresh requests.",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 8031\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 4127\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://medium.com/m/oauth",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "03269e2b-4b52-4cc4-bae9-0515cd461431",
+    "name": "Medium OAuth2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}
