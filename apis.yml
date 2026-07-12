@@ -47,6 +47,10 @@ apis:
       including basicProfile, publishPost, and listPublications, allowing developers to request only the level of access
       their application requires.
 common:
+  - type: DomainSecurity
+    url: security/medium-domain-security.yml
+  - type: Authentication
+    url: authentication/medium-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/medium-com
   - type: JSONLD
@@ -57,6 +61,8 @@ common:
     url: json-schema/medium-user-schema.json
   - type: JSONSchema
     url: json-schema/medium-publication-schema.json
+  - url: https://medium.com/feed/blog
+    type: Blog
 modified: '2026-05-19'
 description: >-
   Documentation for Medium's OAuth2 API. Contribute to Medium/medium-api-docs development by creating an account on

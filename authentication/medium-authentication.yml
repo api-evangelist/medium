@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/medium-rest-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Self-issued access token generated from Medium account settings or an OAuth2
+    access token obtained via the authorization flow.
+  sources:
+  - openapi/medium-rest-api-openapi.yml
