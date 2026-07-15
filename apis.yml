@@ -47,6 +47,8 @@ apis:
       including basicProfile, publishPost, and listPublications, allowing developers to request only the level of access
       their application requires.
 common:
+  - type: AgenticAccess
+    url: agentic-access/medium-agentic-access.yml
   - type: DomainSecurity
     url: security/medium-domain-security.yml
   - type: Authentication
