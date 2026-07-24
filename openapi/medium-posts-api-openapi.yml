@@ -1,0 +1,243 @@
+openapi: 3.1.0
+info:
+  title: Medium OAuth2 Authorization Posts API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  version: '1.0'
+  contact:
+    name: Medium Support
+    url: https://help.medium.com
+  termsOfService: https://policy.medium.com/medium-terms-of-service-9db0094a1e0f
+servers:
+- url: https://medium.com/m/oauth
+  description: OAuth2 Authorization Server
+- url: https://api.medium.com/v1
+  description: Token Exchange Endpoint
+tags:
+- name: Posts
+  description: Operations for creating new posts on a user's profile or within a publication, supporting HTML and Markdown content formats.
+paths:
+  /users/{authorId}/posts:
+    post:
+      operationId: createUserPost
+      summary: Create a post on a user's profile
+      description: Creates a new post and publishes it on the authenticated user's profile. The post content can be provided in HTML or Markdown format. By default posts are published publicly, but can also be created as drafts or unlisted. A maximum of three tags can be applied to each post.
+      tags:
+      - Posts
+      parameters:
+      - $ref: '#/components/parameters/authorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+      responses:
+        '201':
+          description: Successfully created the post.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Post'
+        '400':
+          description: The request body is malformed or contains invalid values such as too many tags or an unsupported content format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: The access token is invalid, has been revoked, or was not provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: The authenticated user is not authorized to publish posts for the specified author.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /publications/{publicationId}/posts:
+    post:
+      operationId: createPublicationPost
+      summary: Create a post in a publication
+      description: Creates a new post within the specified publication. Editors can create posts with any publish status. Writers can only create drafts which are then submitted for review. Users who are not contributors to the publication cannot create posts. The post content can be provided in HTML or Markdown format.
+      tags:
+      - Posts
+      parameters:
+      - $ref: '#/components/parameters/publicationId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostRequest'
+      responses:
+        '201':
+          description: Successfully created the post in the publication.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Post'
+        '400':
+          description: The request body is malformed or contains invalid values such as too many tags or an unsupported content format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: The access token is invalid, has been revoked, or was not provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: The authenticated user is not a contributor to the specified publication or does not have the required role.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  parameters:
+    authorId:
+      name: authorId
+      in: path
+      required: true
+      description: The unique identifier of the user on whose profile the post will be created. Must match the authenticated user.
+      schema:
+        type: string
+    publicationId:
+      name: publicationId
+      in: path
+      required: true
+      description: The unique identifier of the publication.
+      schema:
+        type: string
+  schemas:
+    Post:
+      type: object
+      description: A published or draft post on Medium containing the post metadata and publishing details.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the post.
+        title:
+          type: string
+          description: The title of the post.
+        authorId:
+          type: string
+          description: The unique identifier of the user who authored the post.
+        tags:
+          type: array
+          items:
+            type: string
+          description: The tags applied to the post for classification.
+        url:
+          type: string
+          format: uri
+          description: The URL to the post on Medium.
+        canonicalUrl:
+          type: string
+          format: uri
+          description: The canonical URL of the post if it was originally published elsewhere.
+        publishStatus:
+          type: string
+          enum:
+          - public
+          - draft
+          - unlisted
+          description: The current publish status of the post.
+        publishedAt:
+          type: integer
+          format: int64
+          description: The timestamp in milliseconds when the post was published.
+        license:
+          type: string
+          description: The license identifier under which the post is published.
+        licenseUrl:
+          type: string
+          format: uri
+          description: The URL to the full text of the license.
+        publicationId:
+          type: string
+          description: The unique identifier of the publication the post belongs to, if applicable.
+    CreatePostRequest:
+      type: object
+      description: The request body for creating a new post on Medium.
+      required:
+      - title
+      - contentFormat
+      - content
+      properties:
+        title:
+          type: string
+          maxLength: 100
+          description: The title of the post, limited to 100 characters.
+        contentFormat:
+          type: string
+          enum:
+          - html
+          - markdown
+          description: The format of the content field, either HTML or Markdown.
+        content:
+          type: string
+          description: The body content of the post in the format specified by contentFormat. HTML content should use semantic tags.
+        tags:
+          type: array
+          maxItems: 3
+          items:
+            type: string
+            maxLength: 25
+          description: Tags to classify the post, limited to a maximum of three tags with each tag up to 25 characters.
+        canonicalUrl:
+          type: string
+          format: uri
+          description: The original URL if this post was first published elsewhere. Used to set the canonical link for SEO purposes.
+        publishStatus:
+          type: string
+          enum:
+          - public
+          - draft
+          - unlisted
+          default: public
+          description: The publish status of the post. Defaults to public if not specified. Writers creating publication posts can only use draft.
+        license:
+          type: string
+          enum:
+          - all-rights-reserved
+          - cc-40-by
+          - cc-40-by-sa
+          - cc-40-by-nd
+          - cc-40-by-nc
+          - cc-40-by-nc-nd
+          - cc-40-by-nc-sa
+          - cc-40-zero
+          - public-domain
+          default: all-rights-reserved
+          description: The license under which the post is published. Defaults to all-rights-reserved.
+        notifyFollowers:
+          type: boolean
+          description: Whether to notify the author's followers about the new post.
+    Error:
+      type: object
+      description: An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
+externalDocs:
+  description: Medium API Authentication Documentation
+  url: https://github.com/Medium/medium-api-docs#2-authentication

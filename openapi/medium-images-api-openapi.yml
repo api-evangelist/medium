@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Medium OAuth2 Authorization Images API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  version: '1.0'
+  contact:
+    name: Medium Support
+    url: https://help.medium.com
+  termsOfService: https://policy.medium.com/medium-terms-of-service-9db0094a1e0f
+servers:
+- url: https://medium.com/m/oauth
+  description: OAuth2 Authorization Server
+- url: https://api.medium.com/v1
+  description: Token Exchange Endpoint
+tags:
+- name: Images
+  description: Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.
+paths:
+  /images:
+    post:
+      operationId: uploadImage
+      summary: Upload an image
+      description: Uploads an image to Medium for use in posts. The image must be sent as multipart form data with the field name "image". Supported formats are JPEG, PNG, GIF, and TIFF. Only one image can be uploaded per request. Medium also automatically side-loads images referenced in img src attributes within post content.
+      tags:
+      - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - image
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff.
+      responses:
+        '201':
+          description: Successfully uploaded the image.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Image'
+        '401':
+          description: The access token is invalid, has been revoked, or was not provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      description: An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
+    Image:
+      type: object
+      description: An uploaded image on Medium with its URL and content hash.
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL where the uploaded image is hosted on Medium.
+        md5:
+          type: string
+          description: The MD5 hash of the uploaded image content for verification.
+externalDocs:
+  description: Medium API Authentication Documentation
+  url: https://github.com/Medium/medium-api-docs#2-authentication

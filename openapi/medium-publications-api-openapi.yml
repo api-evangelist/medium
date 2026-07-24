@@ -1,0 +1,150 @@
+openapi: 3.1.0
+info:
+  title: Medium OAuth2 Authorization Publications API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  version: '1.0'
+  contact:
+    name: Medium Support
+    url: https://help.medium.com
+  termsOfService: https://policy.medium.com/medium-terms-of-service-9db0094a1e0f
+servers:
+- url: https://medium.com/m/oauth
+  description: OAuth2 Authorization Server
+- url: https://api.medium.com/v1
+  description: Token Exchange Endpoint
+tags:
+- name: Publications
+  description: Operations for listing publications a user is associated with and retrieving contributors for a given publication.
+paths:
+  /users/{userId}/publications:
+    get:
+      operationId: listUserPublications
+      summary: List user publications
+      description: Returns a list of publications that the specified user subscribes to, writes for, or edits. The authenticated user can only list their own publications; attempting to list another user's publications will result in a 403 Forbidden error.
+      tags:
+      - Publications
+      parameters:
+      - $ref: '#/components/parameters/userId'
+      responses:
+        '200':
+          description: Successfully retrieved the list of user publications.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Publication'
+        '401':
+          description: The access token is invalid, has been revoked, or was not provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: The authenticated user does not have permission to list publications for the specified user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /publications/{publicationId}/contributors:
+    get:
+      operationId: listPublicationContributors
+      summary: List publication contributors
+      description: Returns a list of contributors (editors and writers) for the specified publication. Each contributor includes their user ID, the publication ID, and their role within the publication.
+      tags:
+      - Publications
+      parameters:
+      - $ref: '#/components/parameters/publicationId'
+      responses:
+        '200':
+          description: Successfully retrieved the list of publication contributors.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contributor'
+        '401':
+          description: The access token is invalid, has been revoked, or was not provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Publication:
+      type: object
+      description: A Medium publication that aggregates posts from multiple contributors around a shared topic or brand.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the publication.
+        name:
+          type: string
+          description: The name of the publication as displayed on Medium.
+        description:
+          type: string
+          description: A short description of the publication's focus or mission.
+        url:
+          type: string
+          format: uri
+          description: The URL to the publication's homepage on Medium.
+        imageUrl:
+          type: string
+          format: uri
+          description: The URL to the publication's logo or header image.
+    Contributor:
+      type: object
+      description: A contributor to a Medium publication with a specific editorial role.
+      properties:
+        publicationId:
+          type: string
+          description: The unique identifier of the publication the contributor belongs to.
+        userId:
+          type: string
+          description: The unique identifier of the contributing user.
+        role:
+          type: string
+          enum:
+          - editor
+          - writer
+          description: The role of the contributor within the publication. Editors can manage all content while writers can submit drafts.
+    Error:
+      type: object
+      description: An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: The unique identifier of the user whose publications are being listed.
+      schema:
+        type: string
+    publicationId:
+      name: publicationId
+      in: path
+      required: true
+      description: The unique identifier of the publication.
+      schema:
+        type: string
+externalDocs:
+  description: Medium API Authentication Documentation
+  url: https://github.com/Medium/medium-api-docs#2-authentication

@@ -1,0 +1,65 @@
+openapi: 3.1.0
+info:
+  title: Medium OAuth2 Authorization API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  version: '1.0'
+  contact:
+    name: Medium Support
+    url: https://help.medium.com
+  termsOfService: https://policy.medium.com/medium-terms-of-service-9db0094a1e0f
+servers:
+- url: https://medium.com/m/oauth
+  description: OAuth2 Authorization Server
+- url: https://api.medium.com/v1
+  description: Token Exchange Endpoint
+tags:
+- name: Authorization
+  description: Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization page.
+paths:
+  /authorize:
+    get:
+      operationId: authorizeUser
+      summary: Authorize a user via OAuth2
+      description: Redirects the user to Medium's authorization page where they can grant the application access to their account. The application specifies the desired scopes and a state parameter for CSRF protection. Upon successful authorization, Medium redirects the user back to the specified redirect URI with an authorization code and the state parameter.
+      tags:
+      - Authorization
+      parameters:
+      - name: client_id
+        in: query
+        required: true
+        description: The client ID of the application as registered with Medium.
+        schema:
+          type: string
+      - name: scope
+        in: query
+        required: true
+        description: A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications, publishPost, and uploadImage. The uploadImage scope is an extended scope that requires prior authorization from Medium.
+        schema:
+          type: string
+      - name: state
+        in: query
+        required: true
+        description: An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged in the callback.
+        schema:
+          type: string
+      - name: response_type
+        in: query
+        required: true
+        description: Must be set to "code" to indicate the authorization code grant flow.
+        schema:
+          type: string
+          enum:
+          - code
+      - name: redirect_uri
+        in: query
+        required: true
+        description: The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs registered for the application.
+        schema:
+          type: string
+          format: uri
+      responses:
+        '302':
+          description: Redirects the user to Medium's authorization page. After the user grants or denies access, they are redirected to the specified redirect URI with the authorization code and state as query parameters.
+externalDocs:
+  description: Medium API Authentication Documentation
+  url: https://github.com/Medium/medium-api-docs#2-authentication
