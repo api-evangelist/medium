@@ -1,51 +1,114 @@
 aid: medium
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/medium.png
 url: https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
 apis:
-  - aid: medium:rest-api
-    name: Medium REST API
-    tags:
-      - Blogging
-      - Content
-      - Posts
-      - Publications
-      - Publishing
-      - Social Media
-      - Writing
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://api.medium.com/v1
-    humanURL: https://github.com/Medium/medium-api-docs
-    properties:
-      - url: https://github.com/Medium/medium-api-docs
-        type: Documentation
-      - type: OpenAPI
-        url: openapi/medium-rest-api-openapi.yml
-    description: >-
-      The Medium REST API provides programmatic access to the Medium online publishing platform. Developers can
-      authenticate users via OAuth2, retrieve user profile details, list publications a user is associated with, create
-      posts on a user's profile or within a publication, and upload images. The API is JSON-based with all requests made
-      over HTTPS to endpoints under api.medium.com/v1, enabling integrations that automate content publishing workflows
-      on Medium.
-  - aid: medium:oauth2
-    name: Medium OAuth2 API
-    tags:
-      - Authentication
-      - Authorization
-      - Identity
-      - OAuth
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    baseURL: https://medium.com/m/oauth
-    humanURL: https://github.com/Medium/medium-api-docs#2-authentication
-    properties:
-      - url: https://github.com/Medium/medium-api-docs#2-authentication
-        type: Documentation
-      - type: OpenAPI
-        url: openapi/medium-oauth2-openapi.yml
-    description: >-
-      The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf
-      on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization
-      code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions
-      including basicProfile, publishPost, and listPublications, allowing developers to request only the level of access
-      their application requires.
+- aid: medium:medium-authorization-api
+  name: medium Authorization API
+  description: >-
+    Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization
+    page.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Authorization
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-authorization-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
+- aid: medium:medium-images-api
+  name: medium Images API
+  description: >-
+    Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-images-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
+- aid: medium:medium-posts-api
+  name: medium Posts API
+  description: >-
+    Operations for creating new posts on a user's profile or within a publication, supporting HTML and
+    Markdown content formats.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-posts-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
+- aid: medium:medium-publications-api
+  name: medium Publications API
+  description: >-
+    Operations for listing publications a user is associated with and retrieving contributors for a given
+    publication.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Publications
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-publications-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
+- aid: medium:medium-tokens-api
+  name: medium Tokens API
+  description: >-
+    Endpoints for exchanging authorization codes for access tokens and refreshing expired access tokens.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
+- aid: medium:medium-users-api
+  name: medium Users API
+  description: >-
+    Operations for retrieving authenticated user profile information including username, name, URL, and
+    avatar image.
+  humanURL: https://github.com/Medium/medium-api-docs
+  baseURL: https://api.medium.com/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/medium-users-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs
+  - type: Documentation
+    url: https://github.com/Medium/medium-api-docs#2-authentication
 common:
   - type: AgenticAccess
     url: agentic-access/medium-agentic-access.yml
