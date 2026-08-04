@@ -1,0 +1,24 @@
+{
+  "provider": "medium",
+  "sources": [
+    "medium-authorization-api-openapi.yml",
+    "medium-images-api-openapi.yml",
+    "medium-posts-api-openapi.yml",
+    "medium-publications-api-openapi.yml",
+    "medium-tokens-api-openapi.yml",
+    "medium-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "medium-authorization-api-openapi.yml",
+    "medium-images-api-openapi.yml",
+    "medium-posts-api-openapi.yml",
+    "medium-publications-api-openapi.yml",
+    "medium-tokens-api-openapi.yml",
+    "medium-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
