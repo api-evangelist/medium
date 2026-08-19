@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium OAuth2 Authorization Posts API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Posts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a post on a user's profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/users/:authorId/posts",
+            "params": [
+              {
+                "name": "authorId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user on whose profile the post will be created. Must match the authenticated user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new post and publishes it on the authenticated user's profile. The post content can be provided in HTML or Markdown format. By default posts are published publicly, but can also be created as drafts or unlisted. A maximum of three tags can be applied to each post."
+        },
+        {
+          "info": {
+            "name": "Create a post in a publication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/publications/:publicationId/posts",
+            "params": [
+              {
+                "name": "publicationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the publication."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new post within the specified publication. Editors can create posts with any publish status. Writers can only create drafts which are then submitted for review. Users who are not contributors to the publication cannot create posts. The post content can be provided in HTML or Markdown format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

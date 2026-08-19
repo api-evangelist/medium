@@ -1,0 +1,137 @@
+{
+  "item": [
+    {
+      "id": "7731d402-06df-4d3c-a3b0-7559bfe93de5",
+      "name": "Users",
+      "description": {
+        "content": "Operations for retrieving authenticated user profile information including username, name, URL, and avatar image.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00545890-3f26-4496-87de-0415b9699700",
+          "name": "Get authenticated user",
+          "request": {
+            "name": "Get authenticated user",
+            "description": {
+              "content": "Returns details of the authenticated user including their unique user ID, username, display name, profile URL, and avatar image URL. This endpoint is typically used after authentication to obtain the user ID required by other endpoints.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "271503c2-075a-4d79-b3e3-e5245ebc16c7",
+              "name": "Successfully retrieved the authenticated user profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"username\": \"string\",\n    \"name\": \"string\",\n    \"url\": \"https://PQ.kodtZQDedlYEBjuuFlS+vg80hEYjRG,q1sfRwXSQl2g\",\n    \"imageUrl\": \"http://GiACAFCgjTqA.vfmkHM2e1APIOIrAyej\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "390edb66-48af-4007-9646-48f5f2aecfdd",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 7054\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 4764\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://medium.com/m/oauth",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ab20b478-1111-4ec9-8d7a-479b25b2cbee",
+    "name": "Medium OAuth2 Authorization Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}

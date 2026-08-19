@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "f3d1bcf2-36e7-4d21-a279-bceced4920e0",
+      "name": "Authorization",
+      "description": {
+        "content": "Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization page.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f2b8916-7924-48b8-9bbf-54a991fe9ba8",
+          "name": "Authorize a user via OAuth2",
+          "request": {
+            "name": "Authorize a user via OAuth2",
+            "description": {
+              "content": "Redirects the user to Medium's authorization page where they can grant the application access to their account. The application specifies the desired scopes and a state parameter for CSRF protection. Upon successful authorization, Medium redirects the user back to the specified redirect URI with an authorization code and the state parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) The client ID of the application as registered with Medium."
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "(Required) A comma-separated list of requested permissions. Available scopes are basicProfile, listPublications, publishPost, and uploadImage. The uploadImage scope is an extended scope that requires prior authorization from Medium."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "(Required) An arbitrary string used to prevent cross-site request forgery attacks. This value is returned unchanged in the callback."
+                },
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be set to \"code\" to indicate the authorization code grant flow."
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) The URL where Medium will redirect the user after authorization. Must match one of the redirect URIs registered for the application."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ad96fac-c75b-4db1-bf94-177e02765825",
+              "name": "Redirects the user to Medium's authorization page. After the user grants or denies access, they are redirected to the specified redirect URI with the authorization code and state as query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://medium.com/m/oauth",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5685a59d-7a26-4098-8c5c-c18e133bfc0c",
+    "name": "Medium OAuth2 Authorization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}

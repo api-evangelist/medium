@@ -1,0 +1,347 @@
+{
+  "item": [
+    {
+      "id": "23902c17-593a-4e88-a338-97ea12d68d7c",
+      "name": "Publications",
+      "description": {
+        "content": "Operations for listing publications a user is associated with and retrieving contributors for a given publication.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "692cdda7-1c9b-4d03-83d6-2c14e4592cdf",
+          "name": "List user publications",
+          "request": {
+            "name": "List user publications",
+            "description": {
+              "content": "Returns a list of publications that the specified user subscribes to, writes for, or edits. The authenticated user can only list their own publications; attempting to list another user's publications will result in a 403 Forbidden error.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":userId",
+                "publications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "userId",
+                  "description": "(Required) The unique identifier of the user whose publications are being listed."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "543d6c00-5587-4927-911f-923c679e9500",
+              "name": "Successfully retrieved the list of user publications.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"http://jXOIU.fbuDI1guOQ0UlBRVNQEH74obUmvSOOj7lzqTeB\",\n      \"imageUrl\": \"https://YHWOIwYAZwQPLhfglb.xeelOPvxVLr3JrmThqQuC6Kuie-J3L4wuYt2l.afyLJIUy\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"url\": \"http://j.vhiDwQph4wz1neu8WaPz-9ZUEO4o89,TzeqUHARlcJPLbPVSfR9yFKqjN3bRhq1xzLSAH\",\n      \"imageUrl\": \"http://wKGaRCxdZfpHnwYgpUQFXti.pvewgNQED4R5ZFZMaouQ0jgFD\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d308d0be-0825-4837-9424-3e3747e3a5e3",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 7363\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 7854\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d3e9579-5ffa-4cfd-a523-b683330cf6d8",
+              "name": "The authenticated user does not have permission to list publications for the specified user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":userId",
+                    "publications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "userId",
+                      "description": "(Required) The unique identifier of the user whose publications are being listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 7363\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 7854\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a61ffb2c-99e2-48c2-accb-89f7c52c2141",
+          "name": "List publication contributors",
+          "request": {
+            "name": "List publication contributors",
+            "description": {
+              "content": "Returns a list of contributors (editors and writers) for the specified publication. Each contributor includes their user ID, the publication ID, and their role within the publication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "publications",
+                ":publicationId",
+                "contributors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "publicationId",
+                  "description": "(Required) The unique identifier of the publication."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1d5fc8d-7094-4050-9100-ed5ff90668d6",
+              "name": "Successfully retrieved the list of publication contributors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "contributors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"publicationId\": \"string\",\n      \"userId\": \"string\",\n      \"role\": \"editor\"\n    },\n    {\n      \"publicationId\": \"string\",\n      \"userId\": \"string\",\n      \"role\": \"writer\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a6c9c52-4792-4613-a337-68a73f18afc0",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "publications",
+                    ":publicationId",
+                    "contributors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "publicationId",
+                      "description": "(Required) The unique identifier of the publication."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 7363\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 7854\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://medium.com/m/oauth",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "827e2b9a-4038-4bef-9596-f604a0e727a6",
+    "name": "Medium OAuth2 Authorization Publications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}

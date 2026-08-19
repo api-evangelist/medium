@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium OAuth2 Authorization Publications API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Publications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user publications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://medium.com/m/oauth/users/:userId/publications",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the user whose publications are being listed."
+              }
+            ]
+          },
+          "docs": "Returns a list of publications that the specified user subscribes to, writes for, or edits. The authenticated user can only list their own publications; attempting to list another user's publications will result in a 403 Forbidden error."
+        },
+        {
+          "info": {
+            "name": "List publication contributors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://medium.com/m/oauth/publications/:publicationId/contributors",
+            "params": [
+              {
+                "name": "publicationId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the publication."
+              }
+            ]
+          },
+          "docs": "Returns a list of contributors (editors and writers) for the specified publication. Each contributor includes their user ID, the publication ID, and their role within the publication."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

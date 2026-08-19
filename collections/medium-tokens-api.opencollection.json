@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium OAuth2 Authorization Tokens API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange authorization code for tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/tokens",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges an authorization code obtained from the authorization callback for an access token and a refresh token. The access token is valid for 60 days and is used to authenticate API requests on behalf of the user. The refresh token can be used to obtain a new access token when the current one expires."
+        },
+        {
+          "info": {
+            "name": "Refresh an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://medium.com/m/oauth/tokens/refresh",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges a refresh token for a new access token. This endpoint is used when the current access token has expired. The new access token is valid for another 60 days. A new refresh token may also be returned."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

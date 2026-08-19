@@ -1,0 +1,177 @@
+{
+  "item": [
+    {
+      "id": "0f151fe5-92d9-4cb3-b09b-7c0027e1bda7",
+      "name": "Images",
+      "description": {
+        "content": "Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c49f381c-951e-424a-89c8-6ffcde17ac0c",
+          "name": "Upload an image",
+          "request": {
+            "name": "Upload an image",
+            "description": {
+              "content": "Uploads an image to Medium for use in posts. The image must be sent as multipart form data with the field name \"image\". Supported formats are JPEG, PNG, GIF, and TIFF. Only one image can be uploaded per request. Medium also automatically side-loads images referenced in img src attributes within post content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9daaf94a-56b3-419f-adfc-e4a4cfeedab9",
+              "name": "Successfully uploaded the image.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff.",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"url\": \"http://vAwyhaRagLykANcz.kjevQT2l0Gm,Q6E\",\n    \"md5\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65a9e4d7-f46f-40d9-9644-b5bd87c527d9",
+              "name": "The access token is invalid, has been revoked, or was not provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) The image file to upload. Supported formats are image/jpeg, image/png, image/gif, and image/tiff.",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"code\": 1212\n    },\n    {\n      \"message\": \"string\",\n      \"code\": 7049\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://medium.com/m/oauth",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c3eedc2-203b-44e4-b326-f018ccfd9770",
+    "name": "Medium OAuth2 Authorization Images API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.\n\nContact Support:\n Name: Medium Support",
+      "type": "text/plain"
+    }
+  }
+}

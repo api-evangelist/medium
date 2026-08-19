@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Medium OAuth2 Authorization Users API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://medium.com/m/oauth/me"
+          },
+          "docs": "Returns details of the authenticated user including their unique user ID, username, display name, profile URL, and avatar image URL. This endpoint is typically used after authentication to obtain the user ID required by other endpoints."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
