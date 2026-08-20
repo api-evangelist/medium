@@ -39,6 +39,8 @@ apis:
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -102,6 +104,8 @@ apis:
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
