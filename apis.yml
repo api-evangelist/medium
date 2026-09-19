@@ -31,8 +31,7 @@ url: https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/api
 apis:
 - aid: medium:medium-authorization-api
   name: medium Authorization API
-  description: >-
-    Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization
+  description: Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization
     page.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
@@ -45,10 +44,11 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-authorization-api-overlay.yaml
 - aid: medium:medium-images-api
   name: medium Images API
-  description: >-
-    Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.
+  description: Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
@@ -62,11 +62,12 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-images-api-overlay.yaml
 - aid: medium:medium-posts-api
   name: medium Posts API
-  description: >-
-    Operations for creating new posts on a user's profile or within a publication, supporting HTML and
-    Markdown content formats.
+  description: Operations for creating new posts on a user's profile or within a publication, supporting HTML
+    and Markdown content formats.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
@@ -78,11 +79,12 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-posts-api-overlay.yaml
 - aid: medium:medium-publications-api
   name: medium Publications API
-  description: >-
-    Operations for listing publications a user is associated with and retrieving contributors for a given
-    publication.
+  description: Operations for listing publications a user is associated with and retrieving contributors for a
+    given publication.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
@@ -94,10 +96,11 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-publications-api-overlay.yaml
 - aid: medium:medium-tokens-api
   name: medium Tokens API
-  description: >-
-    Endpoints for exchanging authorization codes for access tokens and refreshing expired access tokens.
+  description: Endpoints for exchanging authorization codes for access tokens and refreshing expired access tokens.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
@@ -109,11 +112,12 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-tokens-api-overlay.yaml
 - aid: medium:medium-users-api
   name: medium Users API
-  description: >-
-    Operations for retrieving authenticated user profile information including username, name, URL, and
-    avatar image.
+  description: Operations for retrieving authenticated user profile information including username, name, URL,
+    and avatar image.
   humanURL: https://github.com/Medium/medium-api-docs
   baseURL: https://api.medium.com/v1
   tags:
@@ -127,26 +131,94 @@ apis:
     url: https://github.com/Medium/medium-api-docs
   - type: Documentation
     url: https://github.com/Medium/medium-api-docs#2-authentication
+  - type: Overlay
+    url: overlays/medium-users-api-overlay.yaml
 common:
-  - type: AgenticAccess
-    url: agentic-access/medium-agentic-access.yml
-  - type: DomainSecurity
-    url: security/medium-domain-security.yml
-  - type: Authentication
-    url: authentication/medium-authentication.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/medium-com
-  - type: JSONLD
-    url: json-ld/medium-context.jsonld
-  - type: JSONSchema
-    url: json-schema/medium-post-schema.json
-  - type: JSONSchema
-    url: json-schema/medium-user-schema.json
-  - type: JSONSchema
-    url: json-schema/medium-publication-schema.json
-  - url: https://medium.com/feed/blog
-    type: Blog
-modified: '2026-05-19'
-description: >-
-  Documentation for Medium's OAuth2 API. Contribute to Medium/medium-api-docs development by creating an account on
-  GitHub.
+- type: AgenticAccess
+  url: agentic-access/medium-agentic-access.yml
+- type: DomainSecurity
+  url: security/medium-domain-security.yml
+- type: Authentication
+  url: authentication/medium-authentication.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/medium-com
+- type: JSONLD
+  url: json-ld/medium-context.jsonld
+- type: JSONSchema
+  url: json-schema/medium-post-schema.json
+- type: JSONSchema
+  url: json-schema/medium-user-schema.json
+- type: JSONSchema
+  url: json-schema/medium-publication-schema.json
+- url: https://medium.com/feed/blog
+  type: Blog
+- type: Website
+  url: https://medium.com
+- type: GitHubOrganization
+  url: https://github.com/Medium
+- type: Documentation
+  url: https://github.com/Medium/medium-api-docs
+- type: APIReference
+  url: https://github.com/Medium/medium-api-docs#3-resources
+- type: GettingStarted
+  url: https://github.com/Medium/medium-api-docs#2-authentication
+- type: Support
+  url: https://help.medium.com/
+- type: StatusPage
+  url: https://status.medium.com/
+- type: Lifecycle
+  url: lifecycle/medium-lifecycle.yml
+- type: Packages
+  url: packages/medium-packages.yml
+- type: SDKs
+  url: packages/medium-packages.yml
+- type: OAuthScopes
+  url: scopes/medium-scopes.yml
+- type: Conventions
+  url: conventions/medium-conventions.yml
+- type: ErrorCatalog
+  url: errors/medium-problem-types.yml
+- type: Conformance
+  url: conformance/medium-conformance.yml
+- type: DataModel
+  url: data-model/medium-data-model.yml
+- type: LLMsTxt
+  url: llms/medium-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+modified: '2026-09-17'
+description: 'Medium is an online publishing platform where writers publish stories and readers follow topics,
+  publications and authors. Its developer surface is a small OAuth2 REST API at api.medium.com/v1 that lets an
+  integration read the authenticated user''s profile, list the publications they write to or edit, upload images,
+  and publish posts to a profile or into a publication. Medium states the API is no longer supported and does
+  not accept new integrations: existing tokens continue to work, but new integration tokens have not been issued
+  since 2023 and the documentation repository was archived in 2023.'
+tags:
+- Publishing
+- Content
+- Blogging
+- Media
+- Social
+- Writing
+- Authentication
+- Deprecated API
+tags_raw:
+- Publishing
+- Content
+- Blogging
+- Media
+- Social
+- Writing
+- OAuth2
+- Deprecated API
+created: '2026-05-04'
+position: Producing
+maintainers:
+- FN: API Evangelist
+  email: info@apievangelist.com
+  url: https://apievangelist.com
+x-enrichment:
+  date: '2026-09-17'
+  status: enriched
+  artifacts_added: 19
+  pass: local-v3
