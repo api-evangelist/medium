@@ -1,0 +1,52 @@
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Medium/medium-api-docs#22-browser-based-authentication
+docs: https://github.com/Medium/medium-api-docs#22-browser-based-authentication
+description: >-
+  OAuth2 scopes for Medium's browser-based authorization flow, read from the scope table in section
+  2.2 of Medium's own API documentation. Note that derive-oauth-scopes.py finds NOTHING in the
+  repository's OpenAPIs — none of the six refined specs declares an oauth2 securityScheme, so this
+  artifact could only come from the docs. Scope grants are closed to new integrations: Medium states
+  it does not allow new integrations, and the flow is "supported for existing integrations only".
+flow:
+  type: authorization_code
+  authorization_url: https://medium.com/m/oauth/authorize
+  token_url: https://api.medium.com/v1/tokens
+  refresh_url: https://api.medium.com/v1/tokens
+  scope_delimiter: ','
+  note: >-
+    Scopes are passed comma-separated in the `scope` query parameter, not space-separated as RFC
+    6749 section 3.3 specifies. Access tokens are valid for 60 days; refresh tokens do not expire.
+    Self-issued integration tokens (the recommended path) carry no scope selection at all.
+summary:
+  scope_count: 4
+  extended_count: 1
+scopes:
+- name: basicProfile
+  description: Grants basic access to a user's profile (not including their email).
+  extended: false
+  operations:
+  - getAuthenticatedUser
+- name: listPublications
+  description: Grants the ability to list publications related to the user.
+  extended: false
+  operations:
+  - listUserPublications
+- name: publishPost
+  description: Grants the ability to publish a post to the user's profile.
+  extended: false
+  operations:
+  - createUserPost
+  - createPublicationPost
+- name: uploadImage
+  description: Grants the ability to upload an image for use within a Medium post.
+  extended: true
+  operations:
+  - uploadImage
+  note: >-
+    Extended scope. Medium's docs state integrations are not permitted to request extended scope
+    without explicit prior permission from Medium, and that requesting it through the standard flow
+    errors if the integration has not been authorized for it.
+recommended_default:
+- basicProfile
+- publishPost

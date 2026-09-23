@@ -1,24 +1,32 @@
 {
   "provider": "medium",
   "sources": [
-    "medium-authorization-api-openapi.yml",
-    "medium-images-api-openapi.yml",
-    "medium-posts-api-openapi.yml",
-    "medium-publications-api-openapi.yml",
-    "medium-tokens-api-openapi.yml",
-    "medium-users-api-openapi.yml"
+    "_original/medium-oauth2-openapi.yml",
+    "_original/medium-rest-api-openapi.yml"
   ],
   "outputs": [
     "medium-authorization-api-openapi.yml",
+    "medium-tokens-api-openapi.yml",
     "medium-images-api-openapi.yml",
     "medium-posts-api-openapi.yml",
     "medium-publications-api-openapi.yml",
-    "medium-tokens-api-openapi.yml",
     "medium-users-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "medium-oauth2-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "medium-rest-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "medium-authorization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "medium-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "medium-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "medium-publications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "medium-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "medium-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

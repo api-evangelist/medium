@@ -1,0 +1,90 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/*.yml, https://github.com/Medium/medium-api-docs
+description: >-
+  Cross-cutting standards conformance for Medium's REST API, derived from the six refined OpenAPIs
+  and checked against Medium's own documentation. Medium implements OAuth 2.0 authorization code
+  and refresh grants faithfully enough to be usable, but publishes no discovery metadata, no problem
+  details, and no domain standard. Publishing has no widely adopted machine contract (there is no
+  IndieWeb Micropub, AtomPub or W3C publishing profile implemented here), so the domain-standard
+  slot is honestly empty rather than filled.
+conformance:
+- id: oauth2
+  name: OAuth 2.0 (RFC 6749)
+  conforms: true
+  evidence: >-
+    https://github.com/Medium/medium-api-docs#22-browser-based-authentication documents the
+    authorization_code and refresh_token grants, client_id/client_secret, state, redirect_uri and a
+    form-encoded POST to /v1/tokens returning token_type "Bearer", access_token, refresh_token,
+    scope and expires_at.
+  deviations:
+  - Scope values are comma-separated, not space-separated (RFC 6749 s3.3).
+  - The token endpoint returns HTTP 201 on success, not 200 (RFC 6749 s5.1).
+  - No token revocation endpoint (RFC 7009) and no token introspection endpoint (RFC 7662).
+- id: bearer-token
+  name: OAuth 2.0 Bearer Token Usage (RFC 6750)
+  conforms: true
+  evidence: >-
+    Every resource operation in openapi/ declares `bearerAuth` (http/bearer) and the docs show
+    `Authorization: Bearer <token>` on each example request.
+- id: oidc
+  name: OpenID Connect Discovery
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration probed on medium.com (403 Cloudflare), api.medium.com (200 but
+    an HTML SPA shell, not a document) and four other hosts (404). See
+    well-known/medium-well-known.yml.
+- id: oauth-server-metadata
+  name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server returns no document on any Medium host — same probe
+    table as above.
+- id: rfc9457
+  name: Problem Details for HTTP APIs (RFC 9457 / RFC 7807)
+  conforms: false
+  evidence: >-
+    Medium returns a bespoke envelope: {"errors":[{"message":"...","code":6000}]} with content-type
+    application/json, observed live on GET https://api.medium.com/v1/me (HTTP 401). No
+    application/problem+json media type appears in any spec or response.
+- id: api-catalog
+  name: Well-Known URI for Changes to an API Catalog (RFC 9727)
+  conforms: false
+  evidence: /.well-known/api-catalog absent on every probed host.
+- id: pagination
+  name: Result pagination
+  conforms: false
+  evidence: >-
+    No operation in openapi/ declares a limit/offset/cursor/page parameter, and no response declares
+    a paging envelope. listUserPublications is documented as returning "a maximum of 200 other
+    publications" with no way to page past that ceiling.
+- id: idempotency
+  name: Idempotency keys on unsafe methods
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header appears in any spec, request example or docs section. See
+    conventions/medium-conventions.yml, idempotency.coverage = none.
+- id: rate-limit-headers
+  name: RateLimit header fields for HTTP (draft / X-RateLimit-*)
+  conforms: false
+  evidence: >-
+    Medium's documentation states no rate limits, and no RateLimit-*, X-RateLimit-* or Retry-After
+    header is documented or declared. See rate-limits/medium-rate-limits.yml.
+- id: webhooks
+  name: Webhooks / event delivery
+  conforms: false
+  evidence: >-
+    No webhook, callback, event or streaming surface appears in the docs or in any spec; no AsyncAPI
+    is published. There is nothing to grade — the API is request/response only.
+domain_standard:
+  present: false
+  note: >-
+    REWARD-ONLY slot, left empty on purpose. Online publishing has candidate standards a provider
+    could declare in-contract — Micropub (W3C), AtomPub (RFC 5023), ActivityPub actor documents,
+    JSON Feed — and Medium's contract declares none of them. Medium's Post/Publication/User schemas
+    are bespoke. No conformance is asserted here because none is evidenced in the spec.
+compliance_certifications: []
+compliance_note: >-
+  probe-security-programs.py returned vdp=none trust=none on 2026-09-17: no security.txt, no bug
+  bounty programme page, no trust centre and no named certification (SOC 2 / ISO 27001 / PCI /
+  HIPAA / FedRAMP) was reachable. No Compliance or TrustCenter pointer is wired.

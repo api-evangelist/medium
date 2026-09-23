@@ -1,0 +1,223 @@
+generated: '2026-09-17'
+method: probed
+source: live HTTPS probes of the NAMED /.well-known path list on every host in apis.yml, every OpenAPI servers[]
+  host, and the docs/policy/status hosts
+description: 'Well-known discovery probe for Medium. NOTHING WAS FOUND. Two distinct failure modes, both recorded
+  rather than guessed at: medium.com / www.medium.com / policy.medium.com sit behind Cloudflare bot management that
+  returns 403 to a scripted client on every path except /robots.txt and /sitemap/sitemap.xml; api.medium.com returns
+  HTTP 200 with an identical HTML single-page-app shell for every /.well-known/* path, which is a catch-all and
+  not a served document. help.medium.com and status.medium.com return honest 404s. No WellKnown, SecurityTxt or
+  APICatalog pointer is wired into apis.yml, because Medium serves none of these documents.'
+summary:
+  hosts_probed: 6
+  paths_probed_per_host: 9
+  documents_found: 0
+  soft_200_html_shells: 9
+  bot_challenged: 27
+hosts:
+- host: medium.com
+  note: Cloudflare bot management answers 403 ("Sorry, you have been blocked") to every non-allowlisted path on
+    this host for a scripted client, including with a full browser User-Agent and navigation headers. /robots.txt
+    on the same host returns 200, so the host is live; these nine paths could not be read. No document was retrieved,
+    so no WellKnown pointer is emitted.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+  - path: /.well-known/aauth-resource.json
+    status: 403
+    file: null
+- host: www.medium.com
+  note: Same Cloudflare 403 as the apex host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+  - path: /.well-known/aauth-resource.json
+    status: 403
+    file: null
+- host: api.medium.com
+  note: 'SOFT HIT / FALSE POSITIVE: this host answers HTTP 200 with the same text/html single-page-app shell for
+    EVERY /.well-known/* path, including paths that cannot exist. Content-type is text/html and the body begins
+    <!DOCTYPE html>. None of these is a document; all are recorded as misses and no WellKnown pointer is emitted.'
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    file: null
+    note: 200 but body is an HTML SPA shell, not a document — treated as a miss
+- host: help.medium.com
+  note: Zendesk help centre; honest 404 HTML on every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    file: null
+- host: policy.medium.com
+  note: Cloudflare 403, same edge policy as the apex host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+  - path: /.well-known/aauth-resource.json
+    status: 403
+    file: null
+- host: status.medium.com
+  note: incident.io status page (title "Medium Status"); honest Next.js 404 on every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /.well-known/aauth-resource.json
+    status: 404
+    file: null
+related_findings:
+- url: https://medium.com/robots.txt
+  status: 200
+  note: The only machine-readable policy document Medium serves to an anonymous client. It Disallows ClaudeBot,
+    GPTBot, Bytespider, Amazonbot, Applebot-Extended, FacebookBot, GoogleOther and meta-externalagent from the whole
+    site except /about, /business, /earn, /gift, /membership, /partner-program and /verified-authors, and it Allows
+    five undocumented internal JSON endpoints under /_/api/ to general crawlers.
+- url: https://medium.com/license.xml
+  status: 403
+  note: 'robots.txt declares a License: line pointing at this URL — an RSL-style machine-readable content licence.
+    The same Cloudflare policy blocks it, so its contents are UNKNOWN. Declared but unreadable; not recorded as
+    a licence artifact because it was never retrieved.'

@@ -1,0 +1,85 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/*.yml (candidate tools); web search + https://github.com/Medium org listing (no
+  official server found)
+status: candidate
+description: >-
+  Medium publishes NO MCP server. A search of Medium's GitHub organisation (100 repos listed
+  2026-09-17) and of the web found only third-party community servers wrapping the same closed REST
+  API. The tools below are a CANDIDATE set derived from the eight operations in this repository's
+  OpenAPIs — they describe what an MCP server for Medium could expose, not anything Medium ships. No
+  MCPServer pointer is wired into apis.yml, because none exists to point at.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+  note: >-
+    mode: none — nobody ships a server. `auth: api-key` describes what such a server would need (a
+    Medium self-issued integration token as a bearer credential), not a server that exists. Medium
+    has not issued new integration tokens since 2023 and closed the API to new integrations, so even
+    a third-party server cannot be onboarded by a new user today.
+search:
+  official_server_found: false
+  searched:
+  - https://github.com/Medium (org repo listing, 100 repos, no MCP repo)
+  - web search for an official Medium MCP endpoint
+  third_party_examples:
+  - https://github.com/Dishant27/medium-mcp-server
+  note: >-
+    Third-party servers are recorded as context only. They are not Medium's, are not wired as a
+    pointer, and inherit the same closed-API constraint.
+tools:
+- name: get_authenticated_user
+  rest: getAuthenticatedUser
+  method: GET
+  path: /v1/me
+  consequence: read
+  description: Return the authenticated Medium user's id, username, name, profile URL and avatar.
+- name: list_user_publications
+  rest: listUserPublications
+  method: GET
+  path: /v1/users/{userId}/publications
+  consequence: read
+  description: List the publications the authenticated user writes to, edits, or follows (max 200 non-authored).
+- name: list_publication_contributors
+  rest: listPublicationContributors
+  method: GET
+  path: /v1/publications/{publicationId}/contributors
+  consequence: read
+  description: List editors and writers for a publication.
+- name: create_user_post
+  rest: createUserPost
+  method: POST
+  path: /v1/users/{authorId}/posts
+  consequence: write
+  irreversible: true
+  description: Publish a post to the user's own Medium profile.
+  warning: >-
+    IRREVERSIBLE and NON-IDEMPOTENT. There is no delete, no unpublish and no idempotency key. A
+    retry publishes a duplicate to a real public profile. Any server exposing this tool should
+    require human confirmation and default publishStatus to `draft`.
+- name: create_publication_post
+  rest: createPublicationPost
+  method: POST
+  path: /v1/publications/{publicationId}/posts
+  consequence: write
+  irreversible: true
+  description: Publish a post into a publication.
+  warning: Same irreversibility and duplicate-on-retry hazard as create_user_post.
+- name: upload_image
+  rest: uploadImage
+  method: POST
+  path: /v1/images
+  consequence: write
+  irreversible: true
+  description: Upload a JPEG/PNG/GIF/TIFF to Medium's CDN and return its permanent URL.
+coverage:
+  openapi_operations: 8
+  candidate_tools: 6
+  omitted:
+  - exchangeAuthorizationCode
+  - refreshAccessToken
+  omitted_reason: Credential-handling operations; a server performs these internally, never as agent tools.

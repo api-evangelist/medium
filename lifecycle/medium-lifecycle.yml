@@ -1,0 +1,68 @@
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Medium/medium-api-docs (README, master branch), https://api.github.com/repos/Medium/medium-api-docs,
+  https://status.medium.com/
+description: >-
+  Medium's REST API is a retired surface that has not been formally sunset. The documentation
+  repository carries a banner reading "The Medium API is no longer supported. We do not recommend
+  using it.", the repository itself was ARCHIVED by Medium on GitHub (last push 2023-03-02), and the
+  authentication section states plainly "We don't allow any new integrations with our API." Existing
+  tokens continue to work — api.medium.com/v1/me still answers with a structured 401 rather than a
+  410 or a DNS failure — so the surface is closed to new consumers while remaining live for the
+  installed base. There is no versioning policy, no Sunset/Deprecation header policy, no SLA and no
+  published end-of-life date.
+versioning:
+  scheme: uri-path
+  current_version: v1
+  base: https://api.medium.com/v1
+  policy_published: false
+  note: >-
+    The only version marker is the /v1 path segment. No version negotiation header, no dated
+    versions, and no documented policy for introducing or retiring a version.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  status: unsupported
+  effective_statements:
+  - quote: 'The Medium API is no longer supported. We do not recommend using it.'
+    source: https://github.com/Medium/medium-api-docs
+    location: README banner
+  - quote: "IMPORTANT: We don't allow any new integrations with our API."
+    source: https://github.com/Medium/medium-api-docs#22-browser-based-authentication
+    location: section 2.2, browser-based authentication
+  - quote: 'Browser-based authentication is supported for existing integrations only.'
+    source: https://github.com/Medium/medium-api-docs#2-authentication
+    location: section 2
+  repository_archived: '2023-03-02'
+  note: >-
+    Medium never issued a machine-readable deprecation signal. There is no Sunset header, no
+    Deprecation header, no 299 warning, and no dated end-of-life. A consumer discovers the status
+    only by reading the prose banner on an archived GitHub repository. Deprecated operations cannot
+    be derived from the OpenAPI either — no operation in any of the six specs carries
+    `deprecated: true`, because the whole surface, not any one operation, is the retired thing.
+deprecated_operations: []
+sdk_status:
+  note: >-
+    Every first-party SDK carries the same banner. medium-sdk-nodejs and medium-sdk-python both open
+    with "no longer supported or maintained by Medium"; the Go SDK has no tagged release since 2017;
+    the official WordPress plugin was closed at Medium's own request in 2019. See
+    packages/medium-packages.yml for dated registry evidence.
+sla:
+  published: false
+  note: No uptime commitment, credit schedule or support-response target is published for the API.
+status_page:
+  url: https://status.medium.com/
+  provider: incident.io
+  status: 200
+  scope: >-
+    Platform-wide status for medium.com. The page is real and live (title "Medium Status") but does
+    not break out an API component, so an API consumer cannot subscribe to a signal specific to
+    api.medium.com.
+support:
+  url: https://help.medium.com/
+  note: >-
+    General help centre, not a developer support channel. help.medium.com is reachable (Zendesk,
+    404s honestly on unknown paths) but the API article itself sits behind the same Cloudflare bot
+    policy that blocks medium.com.

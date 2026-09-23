@@ -1,0 +1,71 @@
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Medium (org repo listing), https://registry.npmjs.org/medium-sdk,
+  https://proxy.golang.org/github.com/!medium/medium-sdk-go/@latest,
+  https://api.wordpress.org/plugins/info/1.0/medium.json
+description: >-
+  First-party client libraries published by Medium for its OAuth2 REST API. Every one of them is
+  dormant: the Node SDK's last npm release is 2016, the Go module's last proxied version is 2017,
+  the Python SDK was never published to PyPI, and the official WordPress plugin was closed by
+  Medium's own request in 2019. The API itself is marked "no longer supported" in Medium's own
+  documentation repository, so the SDK decay tracks the product decision rather than neglect.
+summary:
+  total: 4
+  official: 4
+  with_registry_release: 2
+  newest_release: '2017-12-30'
+packages:
+- name: medium-sdk
+  language: javascript
+  registry: npm
+  registry_url: https://www.npmjs.com/package/medium-sdk
+  repository: https://github.com/Medium/medium-sdk-nodejs
+  official: true
+  version: 0.0.4
+  published: '2016-11-16'
+  install: npm install medium-sdk
+  note: >-
+    Read from registry.npmjs.org/medium-sdk (dist-tags.latest + time). The repository README opens
+    with "This sdk is no longer supported or maintained by Medium." Last publish predates the API's
+    own closure to new integrations by eight years.
+- name: github.com/Medium/medium-sdk-go
+  language: go
+  registry: pkg.go.dev
+  registry_url: https://pkg.go.dev/github.com/Medium/medium-sdk-go
+  repository: https://github.com/Medium/medium-sdk-go
+  official: true
+  version: v0.0.0-20171230201202-4daca056cf6a
+  published: '2017-12-30'
+  install: go get github.com/Medium/medium-sdk-go
+  note: >-
+    Read from proxy.golang.org/github.com/!medium/medium-sdk-go/@latest. Untagged pseudo-version
+    only — Medium never cut a semantic release.
+- name: medium-sdk-python
+  language: python
+  registry: source
+  registry_url: null
+  repository: https://github.com/Medium/medium-sdk-python
+  official: true
+  version: null
+  published: null
+  install: pip install -r requirements.txt  # from a source checkout
+  note: >-
+    Checked pypi.org/pypi/medium-sdk/json (404) — Medium never published this SDK to PyPI, so there
+    is no registry metadata endpoint to date. Installation is from a git checkout, per the
+    repository README, which also states "This code is no longer supported or maintained by Medium."
+    The unrelated PyPI package `medium-api` (0.6.1, 2025-07-16) is a third-party project by another
+    author and is NOT marked official here.
+- name: medium-wordpress-plugin
+  language: php
+  registry: wordpress.org
+  registry_url: https://wordpress.org/plugins/medium/
+  repository: https://github.com/Medium/medium-wordpress-plugin
+  official: true
+  version: null
+  published: null
+  status: closed
+  note: >-
+    api.wordpress.org/plugins/info/1.0/medium.json returns {"error":"closed", "closed":true,
+    "closed_date":"2019-08-28", "reason":"author-request"} — Medium asked for its own official
+    cross-posting plugin to be permanently withdrawn from the WordPress directory. No version or
+    date is recoverable from the registry because the listing no longer serves package metadata.

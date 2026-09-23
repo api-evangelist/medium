@@ -1,0 +1,124 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/*.yml, https://github.com/Medium/medium-api-docs, live probe of
+  https://api.medium.com/v1/me (HTTP 401, 2026-09-17)
+description: >-
+  Cross-cutting runtime semantics for Medium's REST API. The surface is small (8 operations, 4 of
+  them writes) and conventionally shaped for 2015: a `data` envelope, bearer auth, bespoke JSON
+  errors, and no runtime safety machinery at all. The three properties an agent most needs before
+  acting — can I rehearse, can I safely retry, can I take it back — are all absent, and all three
+  matter more here than usual because every write lands on a real public profile on medium.com.
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <token>'
+  kinds:
+  - name: self-issued integration token
+    expires: never
+    revocable: true
+    note: Recommended by Medium. No scope selection. No longer issued to new users.
+  - name: OAuth2 access token
+    expires: 60 days
+    refresh: non-expiring refresh token via POST /v1/tokens
+    note: Closed to new integrations.
+  see: authentication/medium-authentication.yml, scopes/medium-scopes.yml
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  retention: null
+  evidence: >-
+    No Idempotency-Key (or equivalent) header appears in any of the six OpenAPIs, in any request
+    example in Medium's documentation, or in any SDK. All four write operations — createUserPost,
+    createPublicationPost, uploadImage, exchangeAuthorizationCode — are non-idempotent POSTs with no
+    replay protection.
+  consequence: >-
+    A retried createUserPost publishes a second post. There is no de-duplication key, no
+    client-supplied request id, and no delete operation to clean up after (see reversibility), so a
+    network timeout on a write is unrecoverable by the API alone.
+dry_run_mode:
+  supported: false
+  coverage: none
+  evidence: >-
+    No `dryRun`/`validate_only`/preview parameter exists on any operation, and Medium's own testing
+    section states "We do not have a sandbox environment yet ... These endpoints will perform
+    actions on production data on medium.com. Please test with care."
+  source: https://github.com/Medium/medium-api-docs#4-testing
+reversibility:
+  grade: none
+  applicable: true
+  evidence: >-
+    The API has a write surface (4 mutating operations) and publishes NO reversal operation of any
+    kind. There is no DELETE, no unpublish, no archive, no restore and no update anywhere in the
+    contract: the complete operation set is getAuthenticatedUser, listUserPublications,
+    listPublicationContributors, createUserPost, createPublicationPost, uploadImage,
+    exchangeAuthorizationCode, refreshAccessToken.
+  write_surfaces:
+  - operation: createUserPost
+    consequence: Publishes a post to the authenticated user's public Medium profile.
+    reversal_operation: null
+    window: null
+    note: >-
+      Irreversible via the API. A post can only be deleted by a human in the medium.com web UI. An
+      agent that publishes cannot un-publish.
+  - operation: createPublicationPost
+    consequence: Publishes a post into a publication (immediately visible if the user is an editor).
+    reversal_operation: null
+    window: null
+    note: >-
+      Irreversible via the API. Mitigating factor stated in Medium's docs, not a reversal: a user
+      with the `writer` role can only create posts as `draft`, which remain pending until an editor
+      approves them. That is a gate on the way in, not a way back out.
+  - operation: uploadImage
+    consequence: Stores an image on Medium's CDN and returns a permanent URL.
+    reversal_operation: null
+    window: null
+  - operation: exchangeAuthorizationCode
+    consequence: Mints a 60-day access token and a non-expiring refresh token.
+    reversal_operation: null
+    window: null
+    note: >-
+      No RFC 7009 revocation endpoint. Medium's docs say a user may revoke tokens at any time — from
+      the account settings UI, not through the API.
+  note: >-
+    NO WINDOW IS ASSERTED because Medium states none. The honest grade is `none`: there is no
+    reversal path to document, so there is nothing to verify.
+pagination:
+  supported: false
+  style: none
+  evidence: >-
+    No limit/offset/cursor/page parameter and no paging envelope in any spec. GET
+    /users/{userId}/publications is documented as capped at "a maximum of 200 other publications"
+    with no continuation token — a hard, unpageable ceiling.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+  note: No user-defined metadata field on any resource.
+request_id_tracing:
+  supported: false
+  evidence: >-
+    No X-Request-Id / correlation header is documented, returned in any documented example, or
+    declared in any spec. A client has no id to quote to support.
+versioning:
+  style: uri-path
+  current: v1
+  see: lifecycle/medium-lifecycle.yml
+response_envelope:
+  success: '{"data": <resource or array of resources>}'
+  error: '{"errors": [{"message": "<string>", "code": <integer>}]}'
+  note: >-
+    Every documented success response wraps the payload in a `data` key; every failure returns an
+    `errors` array. See errors/medium-problem-types.yml.
+rate_limit_signaling:
+  supported: false
+  headers: []
+  exhaustion_status: null
+  evidence: >-
+    Medium documents no rate limit and declares no RateLimit-*, X-RateLimit-* or Retry-After header.
+    See rate-limits/medium-rate-limits.yml, limit_count 0.
+content_types:
+  request: application/json (writes), application/x-www-form-urlencoded (token exchange), multipart/form-data (image upload)
+  response: application/json; charset=utf-8

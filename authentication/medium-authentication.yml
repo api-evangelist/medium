@@ -1,14 +1,68 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/medium-rest-api-openapi.yml
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Medium/medium-api-docs#2-authentication
+docs: https://github.com/Medium/medium-api-docs#2-authentication
+description: >-
+  Medium offers two credentials for the same bearer header. Self-issued integration tokens are the
+  recommended path and never expire; OAuth2 access tokens last 60 days and are refreshed with a
+  non-expiring refresh token. Both are closed to new consumers — Medium stopped issuing new
+  integration tokens and states it does not allow new integrations — so this profile documents how
+  an EXISTING credential works, not a path a new developer can take today.
 summary:
   types:
   - http
+  - oauth2
+  schemes: 2
+  new_credentials_available: false
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: Self-issued access token generated from Medium account settings or an OAuth2
-    access token obtained via the authorization flow.
+  header: Authorization
+  format: 'Bearer <token>'
+  description: >-
+    Self-issued access token (called an "integration token" in Medium's user-facing copy), generated
+    by the user at https://medium.com/me/settings. Does not expire; revocable by the user at any
+    time. Carries no scope selection — it is all-or-nothing against the user's account.
+  applies_to:
+  - getAuthenticatedUser
+  - listUserPublications
+  - listPublicationContributors
+  - createUserPost
+  - createPublicationPost
+  - uploadImage
   sources:
-  - openapi/medium-rest-api-openapi.yml
+  - openapi/medium-images-api-openapi.yml
+  - openapi/medium-posts-api-openapi.yml
+  - openapi/medium-publications-api-openapi.yml
+  - openapi/medium-users-api-openapi.yml
+  - https://github.com/Medium/medium-api-docs#21-self-issued-access-tokens
+- name: oauth2
+  type: oauth2
+  flow: authorizationCode
+  authorizationUrl: https://medium.com/m/oauth/authorize
+  tokenUrl: https://api.medium.com/v1/tokens
+  refreshUrl: https://api.medium.com/v1/tokens
+  scopes:
+  - basicProfile
+  - listPublications
+  - publishPost
+  - uploadImage
+  access_token_ttl_days: 60
+  refresh_token_expires: false
+  description: >-
+    Browser-based authorization code flow. NOT DECLARED IN ANY OPENAPI — derive-authentication.py
+    and derive-oauth-scopes.py both find zero oauth2 securitySchemes across the six specs, so this
+    scheme is recorded from Medium's documentation only. Medium states the flow is "supported for
+    existing integrations only".
+  sources:
+  - https://github.com/Medium/medium-api-docs#22-browser-based-authentication
+  see: scopes/medium-scopes.yml
+revocation:
+  api_endpoint: null
+  note: >-
+    No RFC 7009 revocation endpoint and no introspection endpoint. Users revoke tokens from the
+    medium.com account settings UI; an integration cannot revoke its own credential through the API.
+transport:
+  https_required: true
+  evidence: 'Medium''s docs: "All requests must be secure, i.e. https, not http."'

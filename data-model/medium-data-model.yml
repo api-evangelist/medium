@@ -1,0 +1,107 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/medium-users-api-openapi.yml, openapi/medium-publications-api-openapi.yml,
+  openapi/medium-posts-api-openapi.yml, openapi/medium-images-api-openapi.yml,
+  openapi/medium-tokens-api-openapi.yml
+description: >-
+  Entity-relationship graph for Medium's REST API, derived from the components.schemas across the
+  six refined OpenAPIs and the id-reference fields they carry. Four domain entities and one auth
+  entity. The graph is joined entirely by opaque string ids — there is no $ref between entities and
+  no id prefix scheme, so a client must carry ids forward by hand from one call to the next.
+summary:
+  entities: 5
+  relationships: 6
+  id_style: opaque hex string
+  id_prefixes: none
+entities:
+- name: User
+  schema: components.schemas.User
+  source: openapi/medium-users-api-openapi.yml
+  id_field: id
+  fields: [id, username, name, url, imageUrl]
+  retrieved_by: getAuthenticatedUser (GET /v1/me)
+  note: >-
+    The only entry point. There is no lookup-by-username and no lookup-by-id operation — a client
+    can only ever read the authenticated user, so the graph is rooted at "me".
+- name: Publication
+  schema: components.schemas.Publication
+  source: openapi/medium-publications-api-openapi.yml
+  id_field: id
+  fields: [id, name, description, url, imageUrl]
+  retrieved_by: listUserPublications (GET /v1/users/{userId}/publications)
+- name: Contributor
+  schema: components.schemas.Contributor
+  source: openapi/medium-publications-api-openapi.yml
+  id_field: null
+  fields: [publicationId, userId, role]
+  retrieved_by: listPublicationContributors (GET /v1/publications/{publicationId}/contributors)
+  note: >-
+    A join record, not an addressable resource. `role` is an enum of `editor` or `writer`, and it is
+    the value that governs whether createPublicationPost may publish or may only draft.
+- name: Post
+  schema: components.schemas.Post
+  source: openapi/medium-posts-api-openapi.yml
+  id_field: id
+  fields: [id, title, authorId, tags, url, canonicalUrl, publishStatus, publishedAt, license, licenseUrl, publicationId]
+  created_by: [createUserPost, createPublicationPost]
+  note: >-
+    Write-only entity from the API's point of view: a Post can be created but never read back,
+    listed, updated or deleted. `publishedAt` is absent when the post was created as a draft.
+- name: Image
+  schema: components.schemas.Image
+  source: openapi/medium-images-api-openapi.yml
+  id_field: md5
+  fields: [url, md5]
+  created_by: uploadImage
+  note: >-
+    Content-addressed by md5. The returned `url` is embedded by hand into Post.content; there is no
+    typed reference from Post to Image.
+- name: TokenResponse
+  schema: components.schemas.TokenResponse
+  source: openapi/medium-tokens-api-openapi.yml
+  fields: [token_type, access_token, refresh_token, scope, expires_at]
+  note: Auth credential, not a domain resource. Belongs to the User who granted it.
+relationships:
+- from: User
+  to: Publication
+  type: has_many
+  via: listUserPublications path parameter userId -> User.id
+  confidence: high
+- from: Publication
+  to: Contributor
+  type: has_many
+  via: Contributor.publicationId -> Publication.id
+  confidence: high
+- from: Contributor
+  to: User
+  type: belongs_to
+  via: Contributor.userId -> User.id
+  confidence: high
+- from: User
+  to: Post
+  type: has_many
+  via: Post.authorId -> User.id
+  confidence: high
+- from: Publication
+  to: Post
+  type: has_many
+  via: Post.publicationId -> Publication.id
+  confidence: high
+  note: Present only on posts created through createPublicationPost.
+- from: Post
+  to: Image
+  type: references
+  via: Image.url embedded as a URL inside Post.content (untyped, string-level)
+  confidence: low
+  note: >-
+    Not a modelled reference. Recorded at low confidence because it is a documented workflow (upload
+    an image, paste its URL into the post body) rather than a field relation in the contract.
+traversal:
+  root: getAuthenticatedUser
+  canonical_path: >-
+    GET /v1/me -> User.id -> GET /v1/users/{User.id}/publications -> Publication.id ->
+    POST /v1/publications/{Publication.id}/posts
+  note: >-
+    Every write requires an id obtained from a prior read. Medium's docs make this explicit:
+    "Typically, the first request you make should be to acquire user details ... give you a user id
+    that you will need for subsequent requests."

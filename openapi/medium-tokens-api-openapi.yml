@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Medium OAuth2 Authorization Tokens API
-  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, listPublications, and uploadImage, allowing developers to request only the level of access their application requires. Access tokens are valid for 60 days and can be refreshed using refresh tokens.
+  title: Medium OAuth2 Tokens API
+  description: The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform.
   version: '1.0'
   contact:
     name: Medium Support

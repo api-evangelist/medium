@@ -1,0 +1,102 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/medium-images-api-openapi.yml, openapi/medium-posts-api-openapi.yml,
+  openapi/medium-publications-api-openapi.yml, openapi/medium-users-api-openapi.yml,
+  openapi/medium-tokens-api-openapi.yml, https://github.com/Medium/medium-api-docs
+description: >-
+  Error catalog for Medium's REST API, derived from the 4xx responses declared across the six
+  refined OpenAPIs and enriched from the "Possible errors" tables in Medium's own documentation.
+  One numeric error code was observed live: an unauthenticated GET https://api.medium.com/v1/me on
+  2026-09-17 returned HTTP 401 with {"errors":[{"message":"An access token is required.","code":6000}]}.
+format: bespoke
+problem_details_rfc9457: false
+envelope:
+  media_type: application/json
+  shape: '{"errors": [{"message": "<human readable>", "code": <integer>}]}'
+  fields:
+  - name: errors
+    type: array
+    description: One or more error objects. Always present on a failure response.
+  - name: errors[].message
+    type: string
+    description: Human-readable description. This is the only field a client can show a user.
+  - name: errors[].code
+    type: integer
+    description: >-
+      Medium's internal numeric error code. NOT DOCUMENTED — Medium publishes no registry mapping
+      these integers to meanings, so a client cannot branch on them safely. 6000 (access token
+      required) is the only value confirmed by live observation; any other value is unknown.
+  note: >-
+    The envelope is not RFC 9457. There is no `type` URI, no `title`, no `status` in the body, no
+    `detail` and no `instance`, and the media type is application/json rather than
+    application/problem+json.
+summary:
+  http_statuses: 4
+  documented_conditions: 10
+  numeric_codes_published: 0
+  numeric_codes_observed: 1
+problem_types:
+- status: 400
+  title: Bad Request
+  operations:
+  - createUserPost
+  - createPublicationPost
+  conditions:
+  - Required fields were invalid or not specified.
+  - More than three tags were supplied on a post.
+  - An unsupported contentFormat was supplied (only `html` and `markdown` are valid).
+  remediation: >-
+    Validate the request body against components.schemas.CreatePostRequest before sending. Medium
+    does not name the offending field in the response, so the client must do its own validation.
+  source: https://github.com/Medium/medium-api-docs#creating-a-post
+- status: 401
+  title: Unauthorized
+  operations:
+  - getAuthenticatedUser
+  - listUserPublications
+  - listPublicationContributors
+  - createUserPost
+  - createPublicationPost
+  - uploadImage
+  - exchangeAuthorizationCode
+  - refreshAccessToken
+  conditions:
+  - The access token is invalid, was not supplied, or has been revoked by the user.
+  - The access token lacks the scope the operation requires (for example `listPublications`).
+  observed_code: 6000
+  observed_message: An access token is required.
+  remediation: >-
+    Re-issue the integration token from https://medium.com/me/settings, or exchange the refresh
+    token at POST /v1/tokens. Note that Medium no longer issues new integration tokens or accepts
+    new OAuth integrations, so a 401 on a first-time integration is terminal, not transient.
+  source: https://github.com/Medium/medium-api-docs#31-users
+- status: 403
+  title: Forbidden
+  operations:
+  - listUserPublications
+  - createUserPost
+  - createPublicationPost
+  conditions:
+  - The request attempts to list publications belonging to another user.
+  - The authenticated user lacks permission to publish as the `authorId` in the path.
+  - The `publicationId` in the path is not a publication the user may publish into.
+  - A `writer` (as opposed to an `editor`) attempted to publish with a status other than `draft`.
+  remediation: >-
+    Call GET /v1/me first and use the returned `id` as `authorId`; call
+    GET /v1/users/{userId}/publications and only post into publications returned there.
+  source: https://github.com/Medium/medium-api-docs#creating-a-post-under-a-publication
+- status: 429
+  title: Too Many Requests
+  operations: []
+  conditions: []
+  documented: false
+  note: >-
+    Not declared in any spec and not documented. Medium publishes no rate limit and no throttling
+    response, so a client has no documented contract for backoff. Recorded here as an honest gap,
+    not as an asserted behaviour.
+retry_guidance:
+  retryable_statuses: []
+  note: >-
+    Medium documents no retryable condition and no Retry-After header. Because no write operation
+    supports an idempotency key (see conventions/), a blind retry of createUserPost or
+    createPublicationPost risks publishing a duplicate post to a real, public profile.

@@ -4,87 +4,41 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: medium
 providerId: medium
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-17'
+generated: '2026-09-17'
+method: searched
+source: https://github.com/Medium/medium-api-docs
 tags:
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the medium API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Medium REST API
-      - Medium OAuth2 API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Medium REST API
-      - Medium OAuth2 API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Medium REST API
-      - Medium OAuth2 API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Medium REST API
-      - Medium OAuth2 API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Medium REST API
-      - Medium OAuth2 API
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+description: >-
+  Medium publishes NO rate limits for its REST API. Its documentation (Overview, Authentication,
+  Resources, Testing) contains no limit, quota, throttle or 429 reference, declares no
+  RateLimit-*/X-RateLimit-*/Retry-After response header, and none of the six refined OpenAPIs in
+  this repository declares a 429 response. A client therefore has no runtime signal at all: it
+  cannot read a remaining budget, cannot learn a reset time, and has no documented backoff contract.
+limit_count: 0
+limits: []
+headers: {}
+responseCodes: {}
+policies: []
+note: >-
+  REPLACES A FABRICATED SCAFFOLD. The previous version of this file published five limits across
+  free/professional/enterprise tiers (10, 100 and 1,000 requests per minute; 1,000 and 100,000
+  requests per month; burst ceilings of 20/200/5,000) and a full X-RateLimit-* header set. Medium
+  documents none of it — those were bulk-sweep scaffold defaults (method: generated, dated
+  2026-05-04) presented as provider behaviour. A limit_count of 0 with this note is the honest
+  measurement, and it matters: an agent told to expect Retry-After on a 429 would be relying on a
+  header Medium never sends.
+evidence:
+  - url: https://github.com/Medium/medium-api-docs
+    status: 200
+    finding: >-
+      grep for rate limit / 429 / quota / throttle across the full README returns no match outside
+      the table of contents.
+  - url: https://api.medium.com/v1/me
+    status: 401
+    finding: >-
+      Live unauthenticated response carries no RateLimit-*, X-RateLimit-* or Retry-After header.
 maintainers: []

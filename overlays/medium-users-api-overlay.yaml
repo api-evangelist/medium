@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Medium REST Users API
+  version: 1.0.0
+extends: medium-users-api-openapi.yml
+x-generated: '2026-09-17'
+x-method: generated
+x-source: derived from this repository's conventions/, errors/, lifecycle/ and data-model/ artifacts; the original
+  OpenAPI is never mutated
+actions:
+- target: $.info
+  description: Record the retired status of the surface on the contract itself, where Medium states it only in prose
+    on an archived README.
+  update:
+    x-lifecycle-status: unsupported
+    x-lifecycle-evidence: https://github.com/Medium/medium-api-docs — "The Medium API is no longer supported. We
+      do not recommend using it."; repository archived on GitHub, last push 2023-03-02
+    x-new-integrations-accepted: false
+- target: $.info
+  description: Annotate the runtime safety properties an agent needs before calling. Derived in conventions/medium-conventions.yml;
+    absent from the original contract.
+  update:
+    x-idempotency:
+      supported: false
+      coverage: none
+    x-reversibility:
+      grade: none
+      note: No delete, unpublish, update, archive or restore operation exists anywhere in Medium's contract.
+    x-dry-run:
+      supported: false
+      note: 'Medium''s docs: "We do not have a sandbox environment yet ... These endpoints will perform actions
+        on production data on medium.com."'
+    x-rate-limits:
+      published: false
+- target: $.info
+  description: Point at the API Evangelist artifacts derived from this spec.
+  update:
+    x-api-evangelist:
+      profile: https://github.com/api-evangelist/medium
+      errors: errors/medium-problem-types.yml
+      conventions: conventions/medium-conventions.yml
+      lifecycle: lifecycle/medium-lifecycle.yml
+      data-model: data-model/medium-data-model.yml
+- target: $.components.schemas.Error
+  description: Record that the error envelope is bespoke, not RFC 9457, and that the numeric code registry is unpublished.
+  update:
+    x-error-format: bespoke
+    x-rfc9457: false
+    x-observed-code:
+      code: 6000
+      message: An access token is required.
+      observed: GET https://api.medium.com/v1/me, HTTP 401, 2026-09-17
+    x-code-registry-published: false
