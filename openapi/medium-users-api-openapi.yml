@@ -41,6 +41,21 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      description: An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
     User:
       type: object
       description: A Medium user profile containing identifying information and profile metadata.
@@ -62,21 +77,6 @@ components:
           type: string
           format: uri
           description: The URL to the user's avatar image on Medium.
-    Error:
-      type: object
-      description: An error response from the Medium API containing error details.
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: A human-readable description of the error.
-              code:
-                type: integer
-                description: The numeric error code identifying the error type.
   securitySchemes:
     bearerAuth:
       type: http

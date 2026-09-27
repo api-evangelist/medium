@@ -78,13 +78,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   parameters:
-    publicationId:
-      name: publicationId
-      in: path
-      required: true
-      description: The unique identifier of the publication.
-      schema:
-        type: string
     userId:
       name: userId
       in: path
@@ -92,23 +85,14 @@ components:
       description: The unique identifier of the user whose publications are being listed.
       schema:
         type: string
+    publicationId:
+      name: publicationId
+      in: path
+      required: true
+      description: The unique identifier of the publication.
+      schema:
+        type: string
   schemas:
-    Contributor:
-      type: object
-      description: A contributor to a Medium publication with a specific editorial role.
-      properties:
-        publicationId:
-          type: string
-          description: The unique identifier of the publication the contributor belongs to.
-        userId:
-          type: string
-          description: The unique identifier of the contributing user.
-        role:
-          type: string
-          enum:
-          - editor
-          - writer
-          description: The role of the contributor within the publication. Editors can manage all content while writers can submit drafts.
     Publication:
       type: object
       description: A Medium publication that aggregates posts from multiple contributors around a shared topic or brand.
@@ -130,6 +114,22 @@ components:
           type: string
           format: uri
           description: The URL to the publication's logo or header image.
+    Contributor:
+      type: object
+      description: A contributor to a Medium publication with a specific editorial role.
+      properties:
+        publicationId:
+          type: string
+          description: The unique identifier of the publication the contributor belongs to.
+        userId:
+          type: string
+          description: The unique identifier of the contributing user.
+        role:
+          type: string
+          enum:
+          - editor
+          - writer
+          description: The role of the contributor within the publication. Editors can manage all content while writers can submit drafts.
     Error:
       type: object
       description: An error response from the Medium API containing error details.

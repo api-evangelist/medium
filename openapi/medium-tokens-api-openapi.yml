@@ -121,6 +121,21 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      description: An error response from the Medium OAuth2 API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
     TokenResponse:
       type: object
       description: The response from a successful token exchange or refresh containing the access token, refresh token, and metadata.
@@ -150,21 +165,6 @@ components:
           type: integer
           format: int64
           description: The timestamp in milliseconds at which the access token expires.
-    Error:
-      type: object
-      description: An error response from the Medium OAuth2 API containing error details.
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: A human-readable description of the error.
-              code:
-                type: integer
-                description: The numeric error code identifying the error type.
 externalDocs:
   description: Medium API Authentication Documentation
   url: https://github.com/Medium/medium-api-docs#2-authentication
