@@ -78,18 +78,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   parameters:
-    userId:
-      name: userId
-      in: path
-      required: true
-      description: The unique identifier of the user whose publications are being listed.
-      schema:
-        type: string
     publicationId:
       name: publicationId
       in: path
       required: true
       description: The unique identifier of the publication.
+      schema:
+        type: string
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: The unique identifier of the user whose publications are being listed.
       schema:
         type: string
   schemas:
@@ -114,6 +114,21 @@ components:
           type: string
           format: uri
           description: The URL to the publication's logo or header image.
+    Error:
+      type: object
+      description: An error response from the Medium API containing error details.
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: A human-readable description of the error.
+              code:
+                type: integer
+                description: The numeric error code identifying the error type.
     Contributor:
       type: object
       description: A contributor to a Medium publication with a specific editorial role.
@@ -130,21 +145,6 @@ components:
           - editor
           - writer
           description: The role of the contributor within the publication. Editors can manage all content while writers can submit drafts.
-    Error:
-      type: object
-      description: An error response from the Medium API containing error details.
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: A human-readable description of the error.
-              code:
-                type: integer
-                description: The numeric error code identifying the error type.
   securitySchemes:
     bearerAuth:
       type: http

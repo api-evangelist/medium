@@ -103,69 +103,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  parameters:
-    authorId:
-      name: authorId
-      in: path
-      required: true
-      description: The unique identifier of the user on whose profile the post will be created. Must match the authenticated user.
-      schema:
-        type: string
-    publicationId:
-      name: publicationId
-      in: path
-      required: true
-      description: The unique identifier of the publication.
-      schema:
-        type: string
   schemas:
-    Post:
-      type: object
-      description: A published or draft post on Medium containing the post metadata and publishing details.
-      properties:
-        id:
-          type: string
-          description: The unique identifier for the post.
-        title:
-          type: string
-          description: The title of the post.
-        authorId:
-          type: string
-          description: The unique identifier of the user who authored the post.
-        tags:
-          type: array
-          items:
-            type: string
-          description: The tags applied to the post for classification.
-        url:
-          type: string
-          format: uri
-          description: The URL to the post on Medium.
-        canonicalUrl:
-          type: string
-          format: uri
-          description: The canonical URL of the post if it was originally published elsewhere.
-        publishStatus:
-          type: string
-          enum:
-          - public
-          - draft
-          - unlisted
-          description: The current publish status of the post.
-        publishedAt:
-          type: integer
-          format: int64
-          description: The timestamp in milliseconds when the post was published.
-        license:
-          type: string
-          description: The license identifier under which the post is published.
-        licenseUrl:
-          type: string
-          format: uri
-          description: The URL to the full text of the license.
-        publicationId:
-          type: string
-          description: The unique identifier of the publication the post belongs to, if applicable.
     CreatePostRequest:
       type: object
       description: The request body for creating a new post on Medium.
@@ -238,6 +176,68 @@ components:
               code:
                 type: integer
                 description: The numeric error code identifying the error type.
+    Post:
+      type: object
+      description: A published or draft post on Medium containing the post metadata and publishing details.
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the post.
+        title:
+          type: string
+          description: The title of the post.
+        authorId:
+          type: string
+          description: The unique identifier of the user who authored the post.
+        tags:
+          type: array
+          items:
+            type: string
+          description: The tags applied to the post for classification.
+        url:
+          type: string
+          format: uri
+          description: The URL to the post on Medium.
+        canonicalUrl:
+          type: string
+          format: uri
+          description: The canonical URL of the post if it was originally published elsewhere.
+        publishStatus:
+          type: string
+          enum:
+          - public
+          - draft
+          - unlisted
+          description: The current publish status of the post.
+        publishedAt:
+          type: integer
+          format: int64
+          description: The timestamp in milliseconds when the post was published.
+        license:
+          type: string
+          description: The license identifier under which the post is published.
+        licenseUrl:
+          type: string
+          format: uri
+          description: The URL to the full text of the license.
+        publicationId:
+          type: string
+          description: The unique identifier of the publication the post belongs to, if applicable.
+  parameters:
+    publicationId:
+      name: publicationId
+      in: path
+      required: true
+      description: The unique identifier of the publication.
+      schema:
+        type: string
+    authorId:
+      name: authorId
+      in: path
+      required: true
+      description: The unique identifier of the user on whose profile the post will be created. Must match the authenticated user.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
