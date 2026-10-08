@@ -134,6 +134,12 @@ apis:
   - type: Overlay
     url: overlays/medium-users-api-overlay.yaml
 common:
+- type: Plans
+  url: plans/medium-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/medium-rate-limits.yml
+- type: FinOps
+  url: finops/medium-finops.yml
 - type: AgenticAccess
   url: agentic-access/medium-agentic-access.yml
 - type: DomainSecurity
