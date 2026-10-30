@@ -1,4 +1,4 @@
-# medium (medium)
+# Medium
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,65 +64,176 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Documentation for Medium's OAuth2 API. Contribute to Medium/medium-api-docs development by creating an account on GitHub.
+Medium is an online publishing platform where writers publish stories and readers follow topics, publications and authors. Its developer surface is a small OAuth2 REST API at api.medium.com/v1 that lets an integration read the authenticated user's profile, list the publications they write to or edit, upload images, and publish posts to a profile or into a publication. Medium states the API is no longer supported and does not accept new integrations: existing tokens continue to work, but new integration tokens have not been issued since 2023 and the documentation repository was archived in 2023.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml)
+**Areas:** Publishing · Content · Blogging · Media · Social · Writing · Authentication · Deprecated API
 
-## Timestamps
+## Medium on APIs.io
 
-- **Modified:** 2026-05-19
+Everything profiled for Medium is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/medium/](https://apis.io/providers/medium/)** — or go straight to one of the APIs or properties below.
 
-## APIs
+### APIs (6)
 
-### Medium REST API
+- [medium Authorization API](https://apis.io/apis/medium/medium-authorization-api/) — Endpoints for initiating the OAuth2 authorization flow by redirecting users to Medium's authorization page.
+- [medium Images API](https://apis.io/apis/medium/medium-images-api/) — Operations for uploading images to Medium for use in posts. Supports JPEG, PNG, GIF, and TIFF formats.
+- [medium Posts API](https://apis.io/apis/medium/medium-posts-api/) — Operations for creating new posts on a user's profile or within a publication, supporting HTML and Markdown content formats.
+- [medium Publications API](https://apis.io/apis/medium/medium-publications-api/) — Operations for listing publications a user is associated with and retrieving contributors for a given publication.
+- [medium Tokens API](https://apis.io/apis/medium/medium-tokens-api/) — Endpoints for exchanging authorization codes for access tokens and refreshing expired access tokens.
+- [medium Users API](https://apis.io/apis/medium/medium-users-api/) — Operations for retrieving authenticated user profile information including username, name, URL, and avatar image.
 
-The Medium REST API provides programmatic access to the Medium online publishing platform. Developers can authenticate users via OAuth2, retrieve user profile details, list publications a user is associated with, create posts on a user's profile or within a publication, and upload images. The API is JSON-based with all requests made over HTTPS to endpoints under api.medium.com/v1, enabling integrations that automate content publishing workflows on Medium.
+### Published properties
 
-- **Human URL:** [https://github.com/Medium/medium-api-docs](https://github.com/Medium/medium-api-docs)
-- **Base URL:** `https://api.medium.com/v1`
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-#### Tags
+#### MCP servers (1)
 
-- Blogging
-- Content
-- Posts
-- Publications
-- Publishing
-- Social Media
-- Writing
+Model Context Protocol servers that expose the API to agents.
 
-#### Properties
+- [medium-mcp.yml](https://apis.io/servers/medium/medium-mcp-yml/)
 
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Medium Agentic Access](https://apis.io/agentic-access/medium/medium-agentic-access/)
+
+#### JSON Schema (3)
+
+The data models the API reads and writes.
+
+- [Medium Post](https://apis.io/schemas/medium/medium-post/)
+- [Medium Publication](https://apis.io/schemas/medium/medium-publication/)
+- [Medium User](https://apis.io/schemas/medium/medium-user/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Medium Context](https://apis.io/jsonld/medium/medium-context/)
+
+#### Collections (8)
+
+Postman and Open Collection request collections.
+
+- [Medium OAuth2 Authorization API](https://apis.io/collections/medium/open-medium-authorization-api/)
+- [Medium OAuth2 Authorization Images API](https://apis.io/collections/medium/open-medium-images-api/)
+- [Medium OAuth2 API](https://apis.io/collections/medium/open-medium-oauth2/)
+- [Medium OAuth2 Authorization Posts API](https://apis.io/collections/medium/open-medium-posts-api/)
+- [Medium OAuth2 Authorization Publications API](https://apis.io/collections/medium/open-medium-publications-api/)
+- [Medium REST API](https://apis.io/collections/medium/open-medium-rest-api/)
+- [Medium OAuth2 Authorization Tokens API](https://apis.io/collections/medium/open-medium-tokens-api/)
+- [Medium OAuth2 Authorization Users API](https://apis.io/collections/medium/open-medium-users-api/)
+
+#### Overlays (6)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Medium Authorization Api Overlay](https://apis.io/overlays/medium/medium-authorization-api-overlay/)
+- [Medium Images Api Overlay](https://apis.io/overlays/medium/medium-images-api-overlay/)
+- [Medium Posts Api Overlay](https://apis.io/overlays/medium/medium-posts-api-overlay/)
+- [Medium Publications Api Overlay](https://apis.io/overlays/medium/medium-publications-api-overlay/)
+- [Medium Tokens Api Overlay](https://apis.io/overlays/medium/medium-tokens-api-overlay/)
+- [Medium Users Api Overlay](https://apis.io/overlays/medium/medium-users-api-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Medium — jsonschema rules](https://apis.io/rules/medium/medium-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Medium Authentication](https://apis.io/security/medium/medium-authentication/)
+- [Medium Domain Security](https://apis.io/security/medium/medium-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Medium Scopes](https://apis.io/scopes/medium/medium-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Medium Plans Pricing](https://apis.io/plans/medium/medium-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Medium Rate Limits](https://apis.io/rate-limits/medium/medium-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Medium Finops](https://apis.io/finops/medium/medium-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://medium.com)
 - [Documentation](https://github.com/Medium/medium-api-docs)
-- [OpenAPI](openapi/medium-rest-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/medium-rest-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/medium-rest-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Getting started](https://github.com/Medium/medium-api-docs#2-authentication)
+- [API reference](https://github.com/Medium/medium-api-docs#3-resources)
+- [Support](https://help.medium.com/)
+- [Blog](https://medium.com/feed/blog)
+- [GitHub](https://github.com/Medium)
+- [Status](https://status.medium.com/)
 
-### Medium OAuth2 API
+## API Evangelist rating
 
-The Medium OAuth2 API enables third-party applications to authenticate and authorize users to act on their behalf on the Medium platform. Applications redirect users to Medium's authorization endpoint to obtain an authorization code, which is then exchanged for an access token and refresh token. The OAuth2 flow supports scoped permissions including basicProfile, publishPost, and listPublications, allowing developers to request only the level of access their application requires.
+**Kin Score 36.2** — thin · rubric 0.24.0 · scored 2026-10-17
 
-- **Human URL:** [https://github.com/Medium/medium-api-docs#2-authentication](https://github.com/Medium/medium-api-docs#2-authentication)
-- **Base URL:** `https://medium.com/m/oauth`
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 52.5 |
+| Contract governance | 14.4 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 56.5 |
+| Access clarity | 0.0 |
 
-#### Tags
+**Agent readiness 26.4** — agent-aware
 
-- Authentication
-- Authorization
-- Identity
-- OAuth
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-#### Properties
+**Regulatory alignment 26.5** — Horizontal (data, software, accessibility, platform)
 
-- [Documentation](https://github.com/Medium/medium-api-docs#2-authentication)
-- [OpenAPI](openapi/medium-oauth2-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/medium-oauth2.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/medium-oauth2.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/medium/](https://apis.io/providers/medium/).
 
-## Common Properties
+## How this profile is made
 
-- [LinkedIn](https://www.linkedin.com/company/medium-com)
-- [JSON-LD](json-ld/medium-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/medium-post-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/medium-user-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/medium-publication-schema.json) — [JSON Schema](https://json-schema.org/specification)
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Medium: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/medium/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
