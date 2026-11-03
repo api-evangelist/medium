@@ -13,18 +13,20 @@ deliveryModel:
   method: derived
 specificationVersion: '0.23'
 accessModel:
-  pricing: freemium
-  onboarding: self-serve
+  pricing: paid
+  onboarding: unknown
   trial: false
-  try_now: true
+  try_now: false
   public: false
-  label: Freemium · Self-serve signup
-  confidence: medium
+  label: Paid
+  confidence: high
   source:
-  - plans
+  - finops
   - authentication
+  - scopes
+  - rate-limits
   - security
-  generated: '2026-09-03'
+  generated: '2026-11-02'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/medium.png
 url: https://raw.githubusercontent.com/api-evangelist/medium/refs/heads/main/apis.yml
